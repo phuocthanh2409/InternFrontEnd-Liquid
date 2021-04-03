@@ -1,0 +1,79 @@
+<div class="footer">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'block-footer' -%}
+            <div class="footer_content">
+                <div class="footer_icon">
+                {%- if block.settings.image_icon1 != blank -%}
+                        <img src="{{ block.settings.image_icon1 | img_url: 'master' }}" alt="{{block.settings.image_icon1.alt}}">
+                {%- else -%}
+                        {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+                </div>
+                <div class="footer_icon">
+                {%- if block.settings.image_icon2 != blank -%}
+                        <img src="{{ block.settings.image_icon2 | img_url: 'master' }}" alt="{{block.settings.image_icon2.alt}}">
+                {%- else -%}
+                        {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+                </div>
+                <div class="footer_icon">
+                {%- if block.settings.image_icon3 != blank -%}
+                        <img src="{{ block.settings.image_icon3 | img_url: 'master' }}" alt="{{block.settings.image_icon3.alt}}">
+                {%- else -%}
+                        {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+                </div>
+            </div>
+            <div class="footer_image">
+                {%- if block.settings.image_car != blank -%}
+                        <img src="{{ block.settings.image_car | img_url: 'master' }}" alt="{{block.settings.image_car.alt}}">
+                {%- else -%}
+                        {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+            </div>
+        {%- endcase -%}
+    {%- endfor -%}
+</div>
+{% schema %}
+{
+    "name": "Test footer",
+    "tag": "div",
+    "class": "test footer",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "block-footer",
+            "name": "Block Footer",
+            "settings": [
+                {
+                   "type": "image_picker",
+                   "id": "image_icon1",
+                   "label": "Image Icon 1"
+               },
+               {
+                   "type": "image_picker",
+                   "id": "image_icon2",
+                   "label": "Image Icon 2"
+               },
+               {
+                   "type": "image_picker",
+                   "id": "image_icon3",
+                   "label": "Image Icon 3"
+               },
+                {
+                   "type": "image_picker",
+                   "id": "image_car",
+                   "label": "Image Car"
+               }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Test Layout",
+            "category": "Advanced layout"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,141 @@
+<div class="main">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'block-item' -%}
+            <div {% if block.settings.reverse == true %}
+                class="about"
+                {% else %}
+                class="about_reverse"
+                {% endif %}
+             >
+                <div class="about_image">
+                    {%- if block.settings.image != blank -%}
+                        <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{block.settings.image.alt}}">
+                    {%- else -%}
+                        {{ 'image' | placeholder_svg_tag }}
+                    {%- endif -%}
+                </div>
+                <div class="content">
+                    <h2 class="title">{{block.settings.title1}}</h2>
+                    <h4 class="sub_title">{{block.settings.heading1}}</h4>
+                    <p class="main_content">{{block.settings.main_content1}}</p>
+                    <h2 class="title">{{block.settings.title2}}</h2>
+                    <h4 class="sub_title">{{block.settings.heading2}}</h4>
+                    <p class="main_content">{{block.settings.main_content2}}</p>
+                    <h2 class="title">{{block.settings.title3}}</h2>
+                    <h4 class="sub_title">{{block.settings.heading3}}</h4>
+                    <p class="main_content">{{block.settings.main_content3}}</p>
+                    <ul class="content_list">
+                        {{block.settings.content_list}}
+                    </ul>
+                </div>
+            </div>
+        {%- endcase -%}
+    {%- endfor -%}
+</div>
+
+
+{% schema %}
+{
+    "name": "Test",
+    "tag": "div",
+    "class": "test",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "block-item",
+            "name": "Block item",
+            "settings": [
+                {
+                  "type" : "checkbox",
+                  "id" : "reverse",
+                  "label" : {
+                    "en": "Reverse"  
+                  },
+                  "default": true
+                },
+               {
+                   "type": "image_picker",
+                   "id": "image",
+                   "label": "Image"
+               },
+               {
+                  "type": "header",
+                  "content": {
+                    "en": "Content 1"
+                  }
+                },
+               {
+                   "type":"text",
+                   "id": "title1",
+                   "label" : "Title"
+               },
+               {
+                   "type": "text",
+                   "id": "heading1",
+                   "label" : "Heading"
+               },
+               {
+                   "type":"text",
+                   "id":"main_content1",
+                   "label":"Content"
+               },
+               {
+                  "type": "header",
+                  "content": {
+                    "en": "Content 2"
+                  }
+                },
+               {
+                   "type":"text",
+                   "id": "title2",
+                   "label" : "Title"
+               },
+               {
+                   "type": "text",
+                   "id": "heading2",
+                   "label" : "Heading"
+               },
+               {
+                   "type":"text",
+                   "id":"main_content2",
+                   "label":"Content"
+               },
+               {
+                  "type": "header",
+                  "content": {
+                    "en": "Content 3"
+                  }
+                },
+               {
+                   "type":"text",
+                   "id": "title3",
+                   "label" : "Title"
+               },
+               {
+                   "type": "text",
+                   "id": "heading3",
+                   "label" : "Heading"
+               },
+               {
+                   "type":"text",
+                   "id":"main_content3",
+                   "label":"Content"
+               },
+               {
+                   "type":"html",
+                   "id":"content_list",
+                   "label":"Sub Content",
+                   "default" : "<li></li>"
+               }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Test",
+            "category": "Advanced layout"
+        }
+    ]
+}
+{% endschema %}
