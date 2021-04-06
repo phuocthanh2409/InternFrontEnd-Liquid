@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
+
     let item = document.getElementsByClassName("item");
     let length = item.length;
 
@@ -15,4 +16,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
             els[i].classList[fnName](className);
         }
     }
+
+    var slider = tns({
+        "container": ".my-slider",
+        "items": 4,
+        "rewind": false,
+        "swipeAngle": false,
+        "speed": 400,
+        "controlsContainer": "#icon",
+        "nav": false,
+        "loop": false
+    });
 });

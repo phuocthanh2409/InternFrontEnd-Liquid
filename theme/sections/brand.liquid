@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="brand">
+        <marquee class="marquee" scrollamount="15">
+            <div class="image">
+                {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'block-brand' -%}
+                            {%- if block.settings.image_brand != blank -%}
+                                <img src="{{ block.settings.image_brand | img_url: 'master' }}" alt="{{block.settings.image_brand.alt}}">
+                            {%- else -%}
+                                {{ 'image' | placeholder_svg_tag }}
+                            {%- endif -%} 
+                        {%- endcase -%}
+                    {%- endfor -%}
+            </div>
+        </marquee>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Brand",
+    "tag": "div",
+    "class": "brand",
+    "settings": [
+    ],
+    "blocks": [
+        {
+            "type":"block-brand",
+            "name":"Block Brand",
+            "settings": [
+                {
+                  "type": "header",
+                  "content": {
+                    "en": "Slide Brand"
+                }
+                },
+                {
+                   "type": "image_picker",
+                   "id": "image_brand",
+                   "label": "Image Brand"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Brand",
+            "category": "Advanced layout"
+        }
+    ]
+}
+{% endschema %}

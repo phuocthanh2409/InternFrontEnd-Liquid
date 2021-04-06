@@ -156,7 +156,7 @@ body{
         align-items: center;
 
         .footer_icon{
-            margin: 0 50px;
+            padding-left: 65px;
             
             .text{
                 padding-top: 30px;
@@ -182,16 +182,15 @@ body{
     }
     
     .footer_image{
-        height: 443px;
-        position: absolute;
-        right: 0px;
+        position: relative;
         top: -72px;
 
     }
 }
 .faq{
     .heading{
-        margin-top: 100px;
+        margin-bottom: 30px;
+        margin-top: 50px;
 
         .title{
             font-style: normal;
@@ -211,6 +210,7 @@ body{
         }
     }
     .row{
+
         margin-top: 40px;
         -ms-box-orient: horizontal;
         display: -webkit-box;
@@ -223,26 +223,34 @@ body{
         flex-wrap: wrap;
         margin-right: -15px;
         margin-left: -15px;
+
+        .col-6{
+    
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 15px;
+        }
     }
 
-    .col-6{
-        flex: 0 0 50%;
-        max-width: 50%;
-        padding: 0 15px;
-    }
+    
 
     .questions{
+
         width: 100%;
         
         .item{
-        background: #FFFFFF;
-        filter: drop-shadow(0px 4px 12px rgba(194, 194, 194, 0.17));
-        height: fit-content;
-        padding: 20px;
-        cursor: pointer;
-        break-inside: avoid-column;
-        margin-bottom: 30px;
-        
+            
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 4px -2px rgba(0,0,0,0.5);
+            background: #FFFFFF;
+            filter: drop-shadow(0px 4px 12px rgba(194, 194, 194, 0.17));
+            height: fit-content;
+            padding: 20px;
+            cursor: pointer;
+            break-inside: avoid-column;
+            margin-bottom: 30px;
+            
             .icon{
             position: absolute;
             top: 20px;
@@ -253,35 +261,35 @@ body{
             }
 
             h4{
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            overflow-wrap: break-word;
-            min-width: 0;
-            width: 95%;
-            
-            font-size: 18px;
-            line-height: 24px;
-            color: #272E35;
-            border-radius: 2px;
-            cursor: pointer;
-            text-align: left;
-            outline: none;
-            transition: 0.4s;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                overflow-wrap: break-word;
+                min-width: 0;
+                width: 95%;
+                
+                font-size: 18px;
+                line-height: 24px;
+                color: #272E35;
+                border-radius: 2px;
+                cursor: pointer;
+                text-align: left;
+                outline: none;
+                transition: 0.4s;
             }
         
             p{
-            font-weight: normal;
-            font-size: 14px;
-            line-height: 20px;
-            color: #7C7C7C;
-            margin-top: 16px;
-            max-height: 0;
-            overflow: hidden;
-            animation: appear 0.25s ease;
-            display: none;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 20px;
+                color: #7C7C7C;
+                margin-top: 16px;
+                max-height: 0;
+                overflow: hidden;
+                animation: appear 0.25s ease;
+                display: none;
             }
         }
         
@@ -302,7 +310,130 @@ body{
     padding: 0 135px;
 }
 
+.evaluate{
+    .heading{
+        margin: 80px 0px;
+        display: flex;
+        justify-content: space-between;
 
+        .title{
+            float: left;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 26px;
+            line-height: 31px;
+            color: #1E1E1E;
+
+        }
+        .icon{
+            display: flex;
+            align-items: center;
+            
+
+            .icon-left{
+                margin-right: 20px;
+            }
+
+            .icon-left:hover{
+                cursor: pointer;
+            }
+
+            .icon-right:hover{
+                cursor: pointer;
+            }
+
+            svg{
+                fill: #14171A;
+            }
+
+            button[disabled] svg{
+                fill: #BABCBF;
+            }
+
+            button:first-child{
+                margin-right: 26px;
+            }
+
+            button {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                box-shadow: none;
+                cursor: pointer;
+            }
+        }   
+        #icon:active,
+        #icon:focus,
+        #icon:visited,
+        #icon:hover{
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+    }
+    .my-slider{
+        margin-bottom: 80px;
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-around;
+
+        .slide-item{
+            width: 411px;
+            text-align: -webkit-center;
+            
+            .image{
+                width: 200px;
+            }
+
+            .name{
+                margin-top: 10px;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                color: #272E35;
+            }
+
+            .position{
+                margin-top: 10px;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: #BABCBF;
+            }
+
+            .content{
+                margin-top: 12px;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 150%;
+                color: #343F49;
+                width: 200px;
+            }
+        }
+    }
+}
+.brand{
+    padding-top:30px;
+    border-top: 1px solid #F6F6F6;
+    margin-bottom: 100px;
+    display: flex;
+
+    .marquee{
+        width: 100%;
+        height: 150px;
+        direction: left;
+        padding-top: 25px;
+
+        .image{
+            img{
+                margin: 0px 30px;
+            }
+        }   
+    }
+}
 @keyframes appear {
     0%, 50% {
     opacity: 0;
@@ -311,3 +442,17 @@ body{
     opacity: 1;
     }
 }
+
+.contact{
+    display: flex;
+
+    .contact_form{
+        width: 70%;
+        padding-top: 50px;
+
+        .title{
+            
+        }
+    }
+}
+

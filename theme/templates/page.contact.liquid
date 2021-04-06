@@ -1,4 +1,4 @@
-<div class="page-width">
+{% comment %} <div class="page-width">
   <div class="grid">
     <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
       <div class="section-header text-center">
@@ -59,4 +59,43 @@
       </div>
     </div>
   </div>
+</div> {% endcomment %}
+<div class="container">
+  <div class="contact">
+    <div class="contact_form">
+      <div class="title">
+        <h1>DROP US A LINE</h1>
+        <p>If you have any questions regarding any of our services, about a specific turbocharger or related turbo parts, it would be great to hear from you.</p>
+      </div>
+      <div class="form">
+        {%- form 'contact' -%}
+        <p>Your E-mail address *</p>
+        <input type="email" required name="contact[email]">
+        <p>Your name *</p>
+        <input type="text" name="contact[full_name]">
+        <p>Your Phone *</p>
+        <input type="text" name="contact[phone]">
+        <p>Your Comment *</p>
+        <input type="textarea" required name="contact[body]">
+        <button type="submit">Send</button>
+        {%- endform -%}  
+      </div>
+    </div>
+    <div class="information">
+      <div class="time">
+        <h3>WORKING HOURS</h3>
+        <p>Mon-Sat: 8:00AM to 6:30PM</p>
+      </div>
+      <div class="contact">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="social">
+        <h3>JOIN US</h3>
+        <img>
+      </div>
+    </div>
+  </div>
 </div>
+
