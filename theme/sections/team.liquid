@@ -1,4 +1,4 @@
-<div class="evaluate">
+<div class="evaluate" data-section-id="{{section.id}}" data-section-type="slideshow">
     <div class="container">
         <div class="heading">
             <div class="title">
@@ -46,6 +46,18 @@
                     {%- endcase -%}
             {%- endfor -%}
         </div>
+        <script type="application/json" data-tns-config>
+        {
+            "container": ".my-slider",
+            "items": 4,
+            "rewind": false,
+            "swipeAngle": false,
+            "speed": 400,
+            "controlsContainer": "#icon",
+            "nav": false,
+            "loop": false
+        }
+        </script>
     </div>
 </div>
 

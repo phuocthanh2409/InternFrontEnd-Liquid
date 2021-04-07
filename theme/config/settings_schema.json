@@ -1104,6 +1104,27 @@
       },
       {
         "type": "text",
+        "id": "phone",
+        "label":{
+          "en": "Phone Number"
+        }
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "label":{
+          "en": "Email"
+        }
+      },
+      {
+        "type": "text",
+        "id": "social_google_link",
+        "label":{
+          "en": "Google"
+        }
+      },
+      {
+        "type": "text",
         "id": "social_twitter_link",
         "label": {
           "cs": "Twitter",

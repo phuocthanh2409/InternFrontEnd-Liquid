@@ -17,14 +17,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 
-    var slider = tns({
-        "container": ".my-slider",
-        "items": 4,
-        "rewind": false,
-        "swipeAngle": false,
-        "speed": 400,
-        "controlsContainer": "#icon",
-        "nav": false,
-        "loop": false
-    });
+    let slideshow = document.querySelectorAll('[data-section-type="slideshow"]');
+    slideshow.forEach(section => {
+        let configList = section.querySelectorAll('[data-tns-config]');
+        configList.forEach(config => {
+            tns(JSON.parse(config.innerHTML))
+        })
+    })
 });
