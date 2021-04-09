@@ -24,9 +24,9 @@
         <div class="comment">
           <div class="comment_title">
             <p>Your Comment *</p>
-            <label id="labelTextareaContact" for="textAreaContact"></label>
+            <label id="target" for="textAreaContact">0/1200</label>
           </div>
-            <textarea id="textAreaContact" required name="contact[body]" maxlength="12"></textarea>
+            <textarea id="contact-message" required name="contact[body]" maxlength="1200"></textarea>
         </div>
         <button type="submit">Send</button>
         {%- endform -%}  
@@ -111,24 +111,14 @@
       </div>
     </div>
     <script>
-          let textAreaContact = document.getElementById('textAreaContact');
-          let labelTextareaContact = document.getElementById('labelTextareaContact');
-
-          textAreaContact.addEventListener('input', event => {
-          labelTextareaContact.innerHTML = `0 / ${textAreaContact.getAttribute("maxlength")}`;
-          const target = event.currentTarget;
-          const maxLength = target.getAttribute("maxlength");
-          const currentLength = target.value.length;
-
-          if (currentLength >= maxLength ) {
-              labelTextareaContact.innerHTML = `${currentLength} / ${maxLength}`;
-              labelTextareaContact.style.color = 'red';
-              return
-          }
-          labelTextareaContact.style.color = "#BABCBF";
-          labelTextareaContact.innerHTML = `${currentLength} / ${maxLength}`;
-
-          })
+          let targetTextarena = document.getElementById("target");
+          let textarea = document.getElementById("contact-message");
+          textarea.addEventListener("input", function (event) {
+            const maxLength = this.getAttribute("maxlength");
+            const currentLength = this.value.length;
+            targetTextarena.style.color = currentLength >= maxLength ? "red" : "#BABCBF";
+            targetTextarena.innerHTML = `${currentLength}/${maxLength}`;
+          });
     </script>
   </div>
 </div>

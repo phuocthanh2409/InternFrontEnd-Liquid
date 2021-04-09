@@ -1,0 +1,105 @@
+<div class="container-home" id="section-{{section.id}}" data-section-type="slideshow">
+    <div id="customize-control-{{section.id}}" class="control">
+        <button class="prev">
+            <svg width="40" height="40"  viewBox="0 0 18 14" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" fill="white" clip-rule="evenodd" d="M7.91127 0.338713L7.8364 0.256282C7.51196 -0.0591419 7.00145 -0.0834052 6.64839 0.183492L6.5636 0.256282L0.263604 6.38128L0.226346 6.41975L0.176701 6.47911L0.112204 6.57645L0.0641029 6.67508L0.0322606 6.76726L0.00621645 6.89667L0 7L0.00250908 7.06583L0.0182161 7.17563L0.0447643 7.27312L0.084306 7.37032L0.131396 7.45562L0.19772 7.54727L0.263604 7.61872L6.5636 13.7437C6.91508 14.0854 7.48492 14.0854 7.8364 13.7437C8.16083 13.4283 8.18579 12.932 7.91127 12.5887L7.8364 12.5063L3.0744 7.875H17.1C17.5971 7.875 18 7.48325 18 7C18 6.51675 17.5971 6.125 17.1 6.125H3.0726L7.8364 1.49372C8.16083 1.1783 8.18579 0.681968 7.91127 0.338713L7.8364 0.256282L7.91127 0.338713Z" fill="#BABCBF"/>
+            </svg>
+        </button>
+        <button class="next">
+            <svg width="40" height="40" viewBox="0 0 18 14" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" fill="white" clip-rule="evenodd" d="M10.0887 0.338713L10.1636 0.256282C10.488 -0.0591419 10.9985 -0.0834052 11.3516 0.183492L11.4364 0.256282L17.7364 6.38128L17.7737 6.41975L17.8233 6.47911L17.8878 6.57645L17.9359 6.67508L17.9677 6.76726L17.9938 6.89667L18 7L17.9975 7.06583L17.9818 7.17563L17.9552 7.27312L17.9157 7.37032L17.8686 7.45562L17.8023 7.54727L17.7364 7.61872L11.4364 13.7437C11.0849 14.0854 10.5151 14.0854 10.1636 13.7437C9.83917 13.4283 9.81421 12.932 10.0887 12.5887L10.1636 12.5063L14.9256 7.875H0.9C0.402944 7.875 0 7.48325 0 7C0 6.51675 0.402944 6.125 0.9 6.125H14.9274L10.1636 1.49372C9.83917 1.1783 9.81421 0.681968 10.0887 0.338713L10.1636 0.256282L10.0887 0.338713Z" fill="#14171A"/>
+            </svg>
+        </button>
+    </div>
+    <div id="my-slider-{{section.id}}">
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+                {%- when 'block-slide' -%}
+                    <div class="my-slider-{{block.id}}" 
+                    style="background-image: url('{{ block.settings.image-slide | img_url: 'master'}}')">
+                        <div class="content-slider">
+                            <h1 class="title">{{block.settings.title}}</h1>
+                            <h2 class="subtitle">{{block.settings.subtitle}}</h2>
+                            <p class="text">{{block.settings.text}}</p>
+                            <a href="#"><p>Explore Now</p></a>
+                        </div>
+                        <style>
+                            #section-{{section.id}} .my-slider-{{block.id}} a{
+                                background: {{block.settings.color-button}};
+                            }
+                            #section-{{section.id}} .my-slider-{{block.id}} {
+                                position: relative;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                height: 454px;
+                            }
+                        </style>
+                    </div>
+            {%- endcase -%}
+        {%- endfor -%}
+    </div>
+    <script type="application/json" data-tns-config>
+    {
+        "container": "#my-slider-{{section.id}}",
+        "items": 1,
+        "center": true,
+        "mouseDrag": true,
+        "swipeAngle": false,
+        "speed": 400,
+        "nav": false,
+        "loop": false,
+        "controlsContainer": "#customize-control-{{section.id}}"
+    }
+    </script>
+</div>
+
+{% schema %}
+{
+    "name": "Home slide",
+    "tag": "div",
+    "class": "home slide",
+    "settings": [
+    ],
+    "blocks": [
+        {
+            "type": "block-slide",
+            "name": "Block slide",
+            "settings": [
+                {
+                   "type": "image_picker",
+                   "id": "image-slide",
+                   "label": "Image Slide"
+                },
+                {
+                    "type": "color",
+                    "id": "color-button",
+                    "label": {
+                    "en": "Color Button"
+                    }
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Subtitle"
+                },
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Slide Show",
+            "category": "Advanced layout"
+        }
+    ]
+}
+{% endschema %}

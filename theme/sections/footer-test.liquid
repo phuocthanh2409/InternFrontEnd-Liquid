@@ -3,14 +3,15 @@
         {%- for block in section.blocks -%}
             {%- case block.type -%}
                 {%- when 'block-footer' -%}
-                <div class="footer_icon">
+                <div class="footer_icon">  
+                    
                     <div class="image">
                         {%- if block.settings.image_icon != blank -%}
                             <img src="{{ block.settings.image_icon | img_url: 'master' }}" alt="{{block.settings.image_icon.alt}}">
                         {%- else -%}
                             {{ 'image' | placeholder_svg_tag }}
                         {%- endif -%}
-                    </div>  
+                    </div>
                     <div class="text">
                         <p class="title">{{block.settings.title}}</p>
                         <p class="content">{{block.settings.content}}</p>

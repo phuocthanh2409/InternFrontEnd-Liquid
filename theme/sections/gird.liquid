@@ -1,0 +1,67 @@
+<div class="container" >
+    <div class="grid-container">
+        {%- for block in section.blocks -%}
+            {%- assign image = block.settings.image  -%}
+            {%- assign url_image = block.settings.image | img_url: 'master' -%}
+            {%- unless image != blank -%}
+                {{ 'image' | placeholder_svg_tag }}
+            {%- endunless -%}
+            {%- case block.type -%}
+                {%- when 'block-menu-home' -%}
+                    <div class="grid-item" style="background-image: url('{{ block.settings.image | img_url: 'master'}}');">
+                        <h1>{{block.settings.title}}</h1>
+                        <h2>{{block.settings.subtitle}}</h2>
+                        {%- if block.settings.button != blank -%}
+                            <a href="#"><p>{{block.settings.button}}</p></a>
+                        {%- else -%}
+                            <a href="#" style="background-image: url(url_image)"><p>{{block.settings.button}}</p></a>
+                        {%- endif -%}
+                        
+                    </div>
+            {%- endcase -%}
+        {%- endfor -%}
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Menu Home",
+    "tag": "div",
+    "class": "menu home",
+    "settings": [
+    ],
+    "blocks": [
+        {
+            "type": "block-menu-home",
+            "name": "Block Menu Home",
+            "settings": [
+                {
+                   "type": "image_picker",
+                   "id": "image",
+                   "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Sub Title"
+                },
+                {
+                    "type": "text",
+                    "id": "button",
+                    "label": "Button"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Menu Home",
+            "category": "Advanced layout"
+        }
+    ]
+}
+{% endschema %}
