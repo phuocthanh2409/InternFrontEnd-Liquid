@@ -12,9 +12,9 @@
                         <h1>{{block.settings.title}}</h1>
                         <h2>{{block.settings.subtitle}}</h2>
                         {%- if block.settings.button != blank -%}
-                            <a href="#"><p>{{block.settings.button}}</p></a>
+                            <a href="{{block.settings.link}}"><p>{{block.settings.button}}</p></a>
                         {%- else -%}
-                            <a href="#" style="background-image: url(url_image)"><p>{{block.settings.button}}</p></a>
+                            <a href="{{block.settings.link}}" style="background-image: url(url_image)"><p>{{block.settings.button}}</p></a>
                         {%- endif -%}
                         
                     </div>
@@ -52,7 +52,15 @@
                 {
                     "type": "text",
                     "id": "button",
-                    "label": "Button"
+                    "label": "Button",
+                    "default" : "Shop all"
+                },
+                {
+                  "type" : "url",
+                  "id" : "link",
+                  "label" : {
+                    "en": "Link"
+                  }
                 }
             ]
         }
