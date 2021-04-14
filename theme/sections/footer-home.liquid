@@ -1,7 +1,11 @@
 <div class="footer-container">
     <div class="footer-infomation">
         <div class="footer-logo">
-            <img src="{{ 'logo.png' | asset_url }}">
+            {%- if section.settings.image != blank -%}
+                <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{section.settings.image.alt}}">
+            {%- else -%}
+                {{ 'image' | placeholder_svg_tag }}
+            {%- endif -%}
         </div>
         <div class="footer-address">
             <div class="footer-address-icon">
@@ -11,8 +15,7 @@
                 </svg>
             </div>
             <div class="footer-address-content">
-                <p>17 Princess Road, London, 
-                Greater London NW1 8JR, UK</p>
+                <p>{{section.settings.address}}</p>
             </div>
         </div>
         <div class="footer-telephone">
@@ -22,8 +25,7 @@
                 </svg>
             </div>
             <div class="footer-telephone-content">
-                <p>+27 34 66 2455-198
-                Mon-Sat: 8:00AM to 6:30PM</p>
+                <a href="tel:+{{settings.phone}}">{{settings.phone}}</a>
             </div>
         </div>
         <div class="footer-email">
@@ -33,47 +35,39 @@
                 </svg>
             </div>
             <div class="footer-email-content">
-                <p>info@chromium.com</p>
+                <a href="mailto:{{settings.email}}">{{settings.email}}</a>
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2021 Chromium Theme. Designed by Arena</p>
+            <p>{{section.settings.copyright}}</p>
         </div>
     </div>
-    <div class="footer-menu-infomation">
-        <h1>INFORMATION</h1>
-        <ul>
-            <li>About Us</li>
-            <li>Customer Service</li>
-            <li>Privacy Policy</li>
-            <li>Search Terms</li>
-            <li>Contact Us</li>
-            <li>Order & Returns</li>
-            <li>Our Sitemap</li>
-        </ul>
-    </div>
-    <div class="footer-menu-infomation">
-        <h1>WHY BUY FROM US</h1>
-        <ul>
-            <li>Shipping & Delivery</li>
-            <li>Secure Payment</li>
-            <li>Support</li>
-            <li>Guarantee</li>
-            <li>Terms & Condition</li>
-            <li>Returns</li>
-        </ul>
-    </div>
+    {%- for block in section.blocks -%}
+        {%- case block.type -%}
+            {%- when 'block-info' -%}
+                <div class="footer-menu-infomation">
+                    <h1>{{linklists[block.settings.menu].title}}</h1>
+                    <ul>
+                        {%- for link in linklists[block.settings.menu].links -%}
+                            <li><a href="{{link.url}}">{{link.title}}</a></li>
+                        {%- endfor -%}
+                    </ul>
+                </div>
+        {%- endcase -%}
+    {%- endfor -%}
     <div class="footer-input-email">
-        <h1>SUBSCRIBE AND GET 5% OFF DISCOUNT</h1>
-        <p>Subscribe to our Newsletter and get bonuses for the next purchase</p>
-        <div class="footer-button">
-            <input type="email" placeholder="Enter your email">
-            <button type="submit">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0887 5.33871L13.1636 5.25628C13.488 4.94086 13.9985 4.91659 14.3516 5.18349L14.4364 5.25628L20.7364 11.3813L20.7737 11.4197L20.8233 11.4791L20.8878 11.5764L20.9359 11.6751L20.9677 11.7673L20.9938 11.8967L21 12L20.9975 12.0658L20.9818 12.1756L20.9552 12.2731L20.9157 12.3703L20.8686 12.4556L20.8023 12.5473L20.7364 12.6187L14.4364 18.7437C14.0849 19.0854 13.5151 19.0854 13.1636 18.7437C12.8392 18.4283 12.8142 17.932 13.0887 17.5887L13.1636 17.5063L17.9256 12.875H3.9C3.40294 12.875 3 12.4832 3 12C3 11.5168 3.40294 11.125 3.9 11.125H17.9274L13.1636 6.49372C12.8392 6.1783 12.8142 5.68197 13.0887 5.33871L13.1636 5.25628L13.0887 5.33871Z" fill="white"/>
-                </svg>
-            </button>
-        </div>
+        <h1>{{section.settings.title-subscribe}}</h1>
+        <p>{{section.settings.subtitle-subscribe}}</p>
+        {%- form 'contact' -%}
+            <div class="footer-button">
+                <input type="email" placeholder="Enter your email" name="contact[email]">
+                <button type="submit">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0887 5.33871L13.1636 5.25628C13.488 4.94086 13.9985 4.91659 14.3516 5.18349L14.4364 5.25628L20.7364 11.3813L20.7737 11.4197L20.8233 11.4791L20.8878 11.5764L20.9359 11.6751L20.9677 11.7673L20.9938 11.8967L21 12L20.9975 12.0658L20.9818 12.1756L20.9552 12.2731L20.9157 12.3703L20.8686 12.4556L20.8023 12.5473L20.7364 12.6187L14.4364 18.7437C14.0849 19.0854 13.5151 19.0854 13.1636 18.7437C12.8392 18.4283 12.8142 17.932 13.0887 17.5887L13.1636 17.5063L17.9256 12.875H3.9C3.40294 12.875 3 12.4832 3 12C3 11.5168 3.40294 11.125 3.9 11.125H17.9274L13.1636 6.49372C12.8392 6.1783 12.8142 5.68197 13.0887 5.33871L13.1636 5.25628L13.0887 5.33871Z" fill="white"/>
+                    </svg>
+                </button>
+            </div>
+        {%- endform -%}
         <div class="footer-social">
             <h1>JOIN US:</h1>
             <a href="{{settings.social_facebook_link}}" {% if settings.social_facebook_link == '' %} style='display:none' {% endif%}>
@@ -110,34 +104,91 @@
             </a>
         </div>
         <div class="footer-payment">
-            <img src="{{ 'visalogo.png' | asset_url}}">
-            <img src="{{ 'americanlogo.png' | asset_url}}">
-            <img src="{{ 'mastercardlogo.png' | asset_url}}">
-            <img src="{{ 'maestrologo.png' | asset_url}}">
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when 'block-payment' -%}
+                        {%- if block.settings.image-payment != blank -%}
+                            <img src="{{ block.settings.image-payment | img_url: 'master' }}" alt="{{ block.settings.image-payment.alt}}">
+                        {%- else -%}
+                            {{ 'image' | placeholder_svg_tag }}
+                        {%- endif -%}
+                {%- endcase -%}
+            {%- endfor -%}
         </div>
     </div>
-    
-        
 </div>
-
 
 {% schema %}
 {
     "name": "Footer",
-    "tag": "div",
     "class": "footer",
     "settings": [
+            {
+                "type": "header",
+                "content": {
+                "en": "Footer Infomation"
+                }
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image Logo"
+            },
+            {
+                "type": "text",
+                "id": "address",
+                "label": "Address"
+            },
+            {
+                "type": "text",
+                "id": "copyright",
+                "label": "Copyright"
+            },
+            {
+                "type": "header",
+                "content": {
+                "en": "Footer Subscribe"
+                }
+            },
+            {
+                "type": "text",
+                "id": "title-subscribe",
+                "label": "Title Subscribe"
+            },
+            {
+                "type": "text",
+                "id": "subtitle-subscribe",
+                "label": "Sub Title Subscribe"
+            }
     ],
     "blocks": [
         {
-            "type": "block-footer",
-            "name": "Block Footer",
+            "type": "block-info",
+            "name": "Block Infomation",
             "settings": [
                 {
-                  "type": "header",
-                  "content": {
-                    "en": "Footer"
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": {
+                        "en": "Menu"
                     }
+                }
+            ]
+        },
+        {
+            "type": "block-payment",
+            "name": "Block Payment",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": {
+                    "en": "Footer Payment"
+                    }
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image-payment",
+                    "label": "Image Payment"
                 }
             ]
         }

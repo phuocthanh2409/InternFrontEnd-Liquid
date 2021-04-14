@@ -1,0 +1,73 @@
+{%- liquid 
+  assign variant_first_available = product.first_available_variant
+  assign available = product.available   
+-%}
+
+<div class="home-product-slide-content">
+    <div class="home-product-slide-content-promotion-like">
+        {%- if product.compare_at_price > product.price -%}
+            <div class="home-product-slide-content-promotion">
+                <p>-{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</p>
+            </div>
+        {%- endif -%}
+        <div class="home-product-slide-content-like">
+            <a href="#">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.2153 5.9161L11.9997 6.90814L12.7841 5.91615C15.1841 2.8812 19.1198 3.74956 20.504 6.46519C21.1766 7.78471 21.2851 9.64824 20.0667 11.867C18.8773 14.0328 16.4167 16.5334 11.9997 19.052C7.58301 16.5334 5.1225 14.0328 3.93324 11.867C2.71494 9.64827 2.82343 7.78473 3.49602 6.46519C4.88026 3.74949 8.81578 2.88128 11.2153 5.9161Z" stroke="#343F49" stroke-width="2"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="home-product-slide-content-image">
+        <a href="{{product.url}}">
+            {%- if product.featured_image != blank -%}
+                <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.featured_image.alt}}">
+            {%- else -%}
+                {{ 'image' | placeholder_svg_tag }}
+            {%- endif -%} 
+        </a>
+    </div>
+    <div class="home-product-slide-content-type">
+        {% comment %} <a href="#">
+            <h3>{{block.settings.type}}</h3>
+        </a> {% endcomment %}
+        <p>{{product.vendor | link_to_vendor}}</p>
+    </div>
+    <div class="home-product-slide-content-title">
+        <a href="{{product.url}}">
+            <h1>{{product.title}}</h1>
+        </a>
+    </div>
+    <div class="home-product-slide-content-price-button">
+        <div class="home-product-slide-content-price">
+            {%- if product.compare_at_price > product.price -%}
+                <div class="home-product-slide-content-price-sale">
+                    {{product.price | money}}
+                </div>
+                <div class="home-product-slide-content-price-sale-original">
+                    {{product.compare_at_price | money}}
+                </div>
+            {%- else -%}
+                <div class="home-product-slide-content-price-original">
+                    {{product.compare_at_price | money}}
+                </div>
+            {%- endif -%}
+
+        </div>
+        <div class="home-product-slide-content-button">
+            {%- if available -%}
+                {%- form 'product', product -%}
+                    <input type="hidden" name="id" value="{{variant_first_available.id}}">
+                    <button type="submit">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="48" height="48" rx="2" fill="#272E35"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5 31C21.3284 31 22 31.6716 22 32.5C22 33.3284 21.3284 34 20.5 34C19.6716 34 19 33.3284 19 32.5C19 31.6716 19.6716 31 20.5 31ZM29.5 31C30.3284 31 31 31.6716 31 32.5C31 33.3284 30.3284 34 29.5 34C28.6716 34 28 33.3284 28 32.5C28 31.6716 28.6716 31 29.5 31ZM15 14H17C17.4556 14 17.8483 14.3068 17.9651 14.7377L17.9884 14.8479L18.4733 18H33C33.5998 18 34.0549 18.5207 33.9951 19.1003L33.9762 19.2169L32.3242 26.6508C32.0325 27.9637 30.9059 28.9143 29.5779 28.9945L29.3957 29H20.7158C19.2944 29 18.077 28.0044 17.7827 26.6299L17.7507 26.4562L16.1421 16H15C14.4477 16 14 15.5523 14 15C14 14.4872 14.386 14.0645 14.8834 14.0067L15 14H17H15ZM31.7534 20H18.781L19.7275 26.1521C19.7967 26.6024 20.1597 26.9438 20.6034 26.9937L20.7158 27H29.3957C29.8253 27 30.2021 26.7265 30.3402 26.3285L30.3718 26.2169L31.7534 20Z" fill="white"/>
+                        </svg>
+                    </button>
+                {%- endform -%}
+            {%- else -%}
+                Sold out
+            {%- endif -%}
+        </div>
+    </div>
+</div>
