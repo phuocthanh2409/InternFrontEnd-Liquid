@@ -28,16 +28,25 @@
         {%- endif -%}
     </div>
 </div>
+<style>
+    .main_footer{
+        background-image: url("{{ section.settings.image_background | img_url: 'master'}}")
+    }
+</style>
 {% schema %}
 {
     "name": "Test footer",
-    "tag": "div",
     "class": "test footer",
     "settings": [
         {
             "type": "image_picker",
             "id": "image_car",
             "label": "Image Car"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_background",
+            "label": "Image Background"
         }
     ],
     "blocks": [
