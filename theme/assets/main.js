@@ -24,4 +24,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tns(JSON.parse(config.innerHTML))
         })
     })
+
 });

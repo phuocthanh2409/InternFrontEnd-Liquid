@@ -958,6 +958,7 @@ body{
         padding:0 16px;
         padding-top: 40px;
         padding-bottom: 15px;
+        min-height: 400px;
 
         .home-product-slide-content-promotion-like{
             display: flex;
@@ -1614,6 +1615,7 @@ body{
         }
     }
 }
+
 @media only screen and (max-width: 1280px){
     .container{
         padding: 0 140px;
@@ -1622,5 +1624,157 @@ body{
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
         grid-gap: 25px 25px;
+    }
+}
+
+.container-cart{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 135px;
+
+    .card-title{
+        h1{
+            padding-top: 40px;
+            padding-bottom: 40px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 36px;
+            line-height: 43px;
+            color: #14171A;
+        }
+    }
+
+    .cart{
+        padding-bottom: 24px;
+        table{
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #EBEBEB;
+            box-sizing: border-box;
+            border-collapse: collapse
+        }
+        th{
+            background: #F6F6F6;
+            border: 1px solid #EBEBEB;
+            box-sizing: border-box;
+            height: 40px;
+            border: 1px solid #EBEBEB;
+
+            p{
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 19px;
+                text-align: center;
+                color: #14171A;
+                padding-top: 8px;
+            }
+        }
+        td{
+            border: 1px solid #EBEBEB;
+        }
+
+        .cart-row{
+
+            .cart-product{
+                width: 50%;
+                .cart-product-infomation{
+                    display: flex;
+                    
+                    .cart-product-image{
+                        width: 90px;
+                        height: 80px;
+                        margin: 30px 20px;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .cart-product-name{
+                        padding-top: 34px;
+
+                        .card-product-title{
+                            display: block;
+                            width: 325px;
+                            word-break: break-word;                            ;
+                            padding-bottom: 8px;
+                            text-decoration: none;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 16px;
+                            line-height: 150%;
+                            color: #14171A;
+                        }
+                        .card-product-vendor{
+                            display: block;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 17px;
+                            color: #BABCBF;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            .cart-price{
+                text-align: center;
+                vertical-align: middle;
+                width: 15%;
+                p{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 19px;
+                    color: #272E35;
+                }
+            }
+
+            .cart-quantity{
+                vertical-align: middle;
+                text-align: -webkit-center;
+                width: 20%;
+                .cart-quantity-content{
+                    max-width: 96px;
+                    height: 48px;
+                    display: flex;
+                    background: #F6F6F6;
+                    border-radius: 2px;
+
+                    input::-webkit-outer-spin-button,
+                    input::-webkit-inner-spin-button{
+                    -webkit-appearance: none;
+                    }
+                    input{
+                        width: 100%;
+                        border: none;
+                        background: #F6F6F6;
+                        text-align: center;
+                    }
+        
+    
+                    span{
+                        align-self: center;
+                        cursor: pointer;
+                        padding: 0 10px;
+                    }
+                }
+            }
+
+            .cart-total{
+                text-align: center;
+                vertical-align: middle;
+                width: 15%;
+                p{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 19px;
+                    color: #272E35;
+                }
+            }
+        }
     }
 }

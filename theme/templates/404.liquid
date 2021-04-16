@@ -1,11 +1,7 @@
 <div class="page-width">
   <div class="empty-page-content">
     <h1>{{ 'general.404.title' | t }}</h1>
-    {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{section.settings.image.alt}}">
-    {%- else -%}
-        {{ 'image' | placeholder_svg_tag }}
-    {%- endif -%}
+      <img src="{{ '404.png' | asset_url}}">
     <p>{{ 'general.404.subtext' | t }}</p>
     <a href="{{ routes.root_url }}" class="btn btn--has-icon-after">{{ 'general.404.link' | t }}</a>
   </div>
@@ -64,4 +60,3 @@
           text-align: center;
     }
 </style>
-{%- section '404' -%}

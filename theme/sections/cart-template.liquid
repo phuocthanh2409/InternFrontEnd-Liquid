@@ -1,4 +1,76 @@
-<div class="page-width" data-section-id="{{ section.id }}" data-section-type="cart-template" data-ajax-enabled="{{ section.settings.cart_ajax_enable }}">
+<div class="container-cart" data-section-id="{{section.id}}" data-section-type="card-template">
+  <div class="card-title">
+    <h1>{{'cart.general.title' | t}}</h1>
+  </div>
+
+  <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
+    <table>
+      <thead>
+        <th><p>{{'cart.label.product' | t }}</p></th>
+        <th><p>{{'cart.label.price' | t }}</p></th>
+        <th><p>{{'cart.label.quantity' | t }}</p></th>
+        <th><p>{{'cart.label.total' | t }}</p></th>
+      </thead>
+      <tbody>
+        {%- for item in cart.items -%}
+          <tr class="cart-row" data-cart-item data-cart-item-key="{{item.key}}" data-cart-item-url="item.url" data-cart-item-title="{{ item.title }}" data-cart-item-index="{{ forloop.index }}" data-cart-item-quantity="{{ item.quantity }}">
+            <td class="cart-product">
+              <div class="cart-product-infomation">
+                <div class="cart-product-image">
+                  <img src="{{ item | img_url: 'x190' }}" alt="{{ item.image.alt | escape }}" data-cart-item-image> 
+                </div>
+                <div class="cart-product-name">
+                  <a class="card-product-title" href="{{ item.url }}" data-cart-item-title data-role="product-title">
+                    {{ item.product.title }}
+                  </a>
+                  <a class="card-product-vendor" href='{{ "Original Equipment" | url_for_vendor}}'>{{item.product.vendor}}
+                  </a>
+                </div>
+              </div>
+            </td>
+            <td class="cart-price">
+                <p>{{item.product.price}}</p>
+            </td>
+            <td class="cart-quantity">
+              <div class="cart-quantity-content">
+                <span id="down-{{item.id}}">-</span>
+                <input type="number" value="1" min="1" id="cart-quantity-{{item.id}}">
+                <span id="up-{{item.id}}">+</span>
+                <script>
+                  document.getElementById('down-{{item.id}}').addEventListener('click',function(){
+                      let input = this.nextElementSibling;
+                      let value = parseInt(input.value, 10);
+                      
+                      if(value>1)
+                      {
+                          value= isNaN(value) ? 0 : value;
+                          value--;
+                          input.value=value;
+                      }
+                  });
+                  document.getElementById('up-{{item.id}}').addEventListener('click',function(){
+                      let input = this.previousElementSibling;
+                      let value = parseInt(input.value, 10);
+                          value= isNaN(value) ? 0 : value;
+                          value++;
+                          input.value=value;
+                  });
+                </script>
+              </div>
+            </td>
+            <td class="cart-total">
+              <p>{{ item.original_line_price |  money }}</p>
+            </td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </form>
+</div>
+
+
+
+{% comment %} <div class="page-width" data-section-id="{{ section.id }}" data-section-type="cart-template" data-ajax-enabled="{{ section.settings.cart_ajax_enable }}">
 
   <div {% if cart.item_count == 0 %}class="hide" {% endif %}data-cart-wrapper>
     <div class="cart-header">
@@ -244,7 +316,7 @@
             {%- if cart.cart_level_discount_applications.size > 0 -%}
               {%- assign cartDiscounts = cart.cart_level_discount_applications -%}
             {%- endif -%}
-            <div{% if cart.cart_level_discount_applications.size == 0 %} class="hide"{% endif %} data-cart-discount-wrapper>
+            <div {% if cart.cart_level_discount_applications.size == 0 %} class="hide"{% endif %} data-cart-discount-wrapper>
               <div class="order-discount-card-wrapper" data-cart-discount>
                 {%- for discount_application in cartDiscounts -%}
                   <span class="order-discount order-discount--title order-discount--cart">
@@ -315,10 +387,7 @@
     </div>
     <a href="{{ routes.root_url }}" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}{% include 'icon-arrow-right' %}</a>
   </div>
-</div>
-
-
-
+</div> {% endcomment %}
 {% schema %}
 {
   "name": {
