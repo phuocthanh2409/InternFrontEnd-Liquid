@@ -1,3 +1,27 @@
+<div class="product-container" id="ProductSection-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="product"
+  data-enable-history-state="true">
+  <div class="product-detail">
+    <div class="product-slide">
+
+    </div>
+    <div class="product-infomation">
+      <a>{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}  {{ product.title }}</a>
+      <h1></h1>
+      <p></p>
+      <span></span>
+      <span></span>
+      <span></span>
+      <p></p>
+      
+    </div>
+  </div>
+  <div></div>
+</div>
+
+
+
 <div class="product-template__container page-width"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
@@ -277,7 +301,6 @@
     </div>
   </div>
 </div>
-
 {% unless product == empty %}
   <script type="application/json" id="ProductJson-{{ section.id }}">
     {{ product | json }}
@@ -286,8 +309,6 @@
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
 {% endunless %}
-
-
 
 {% schema %}
 {

@@ -1,3 +1,7 @@
+{%- liquid
+    assign setting  =  section.settings 
+    assign collection = collections[section.settings.collection]
+-%} 
 <div class="container-cart" data-section-id="{{section.id}}" data-section-type="card-template">
   <div class="card-title">
     <h1>{{'cart.general.title' | t}}</h1>
@@ -10,6 +14,7 @@
         <th><p>{{'cart.label.price' | t }}</p></th>
         <th><p>{{'cart.label.quantity' | t }}</p></th>
         <th><p>{{'cart.label.total' | t }}</p></th>
+        <th><p></p></th>
       </thead>
       <tbody>
         {%- for item in cart.items -%}
@@ -29,17 +34,21 @@
               </div>
             </td>
             <td class="cart-price">
-                <p>{{item.product.price}}</p>
+                {%- assign hasDiscount = false -%}
+                {%- if item.original_price != item.final_price -%}
+                  {%- assign hasDiscount = true -%}
+                {%- endif -%}
+                <p>{{item.product.price | money }}</p>
             </td>
             <td class="cart-quantity">
               <div class="cart-quantity-content">
                 <span id="down-{{item.id}}">-</span>
-                <input type="number" value="1" min="1" id="cart-quantity-{{item.id}}">
+                <input type="number" value="{{item.quantity}}" min="1" id="cart-quantity-{{item.id}}" name="updates[]" data-quantity-item="{{forloop.index}}">
                 <span id="up-{{item.id}}">+</span>
                 <script>
                   document.getElementById('down-{{item.id}}').addEventListener('click',function(){
                       let input = this.nextElementSibling;
-                      let value = parseInt(input.value, 10);
+                      let value = +input.value;
                       
                       if(value>1)
                       {
@@ -50,7 +59,7 @@
                   });
                   document.getElementById('up-{{item.id}}').addEventListener('click',function(){
                       let input = this.previousElementSibling;
-                      let value = parseInt(input.value, 10);
+                      let value = +input.value
                           value= isNaN(value) ? 0 : value;
                           value++;
                           input.value=value;
@@ -61,13 +70,102 @@
             <td class="cart-total">
               <p>{{ item.original_line_price |  money }}</p>
             </td>
+            <td class="cart-function">
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" aria-label="{{ 'cart.label.remove' | t: product: item.title }}" data-cart-remove data-role="product-remove">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM14.71 13.29C14.8037 13.383 14.8781 13.4936 14.9289 13.6154C14.9797 13.7373 15.0058 13.868 15.0058 14C15.0058 14.132 14.9797 14.2627 14.9289 14.3846C14.8781 14.5064 14.8037 14.617 14.71 14.71C14.617 14.8037 14.5064 14.8781 14.3846 14.9289C14.2627 14.9797 14.132 15.0058 14 15.0058C13.868 15.0058 13.7373 14.9797 13.6154 14.9289C13.4936 14.8781 13.383 14.8037 13.29 14.71L12 13.41L10.71 14.71C10.617 14.8037 10.5064 14.8781 10.3846 14.9289C10.2627 14.9797 10.132 15.0058 10 15.0058C9.86799 15.0058 9.73729 14.9797 9.61543 14.9289C9.49357 14.8781 9.38297 14.8037 9.29 14.71C9.19628 14.617 9.12188 14.5064 9.07111 14.3846C9.02034 14.2627 8.99421 14.132 8.99421 14C8.99421 13.868 9.02034 13.7373 9.07111 13.6154C9.12188 13.4936 9.19628 13.383 9.29 13.29L10.59 12L9.29 10.71C9.1017 10.5217 8.99591 10.2663 8.99591 10C8.99591 9.7337 9.1017 9.4783 9.29 9.29C9.47831 9.1017 9.7337 8.99591 10 8.99591C10.2663 8.99591 10.5217 9.1017 10.71 9.29L12 10.59L13.29 9.29C13.4783 9.1017 13.7337 8.99591 14 8.99591C14.2663 8.99591 14.5217 9.1017 14.71 9.29C14.8983 9.4783 15.0041 9.7337 15.0041 10C15.0041 10.2663 14.8983 10.5217 14.71 10.71L13.41 12L14.71 13.29Z" fill="#343F49"/>
+                </svg>
+              </a>
+            </td>
           </tr>
         {%- endfor -%}
       </tbody>
     </table>
+    <div class="cart-button">
+        <a class="cart-continue" href="{{routes.root_url}}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.36 16.9999C13.2253 16.9994 13.0921 16.9717 12.9684 16.9184C12.8446 16.8652 12.7329 16.7874 12.64 16.6899L8.78 12.6899C8.59677 12.503 8.49414 12.2517 8.49414 11.9899C8.49414 11.7282 8.59677 11.4769 8.78 11.2899L12.78 7.28994C12.8732 7.1967 12.9839 7.12274 13.1057 7.07228C13.2276 7.02182 13.3581 6.99585 13.49 6.99585C13.6219 6.99585 13.7524 7.02182 13.8742 7.07228C13.9961 7.12274 14.1068 7.1967 14.2 7.28994C14.2932 7.38318 14.3672 7.49387 14.4177 7.61569C14.4681 7.73751 14.4941 7.86808 14.4941 7.99994C14.4941 8.1318 14.4681 8.26237 14.4177 8.38419C14.3672 8.50601 14.2932 8.6167 14.2 8.70994L10.9 11.9999L14.08 15.2999C14.2662 15.4873 14.3708 15.7408 14.3708 16.0049C14.3708 16.2691 14.2662 16.5226 14.08 16.7099C13.9854 16.8038 13.8729 16.8778 13.7493 16.9276C13.6256 16.9775 13.4933 17.002 13.36 16.9999Z" fill="#272E35"/>
+          </svg>
+          <p>Continue Shopping</p>
+        </a>
+        <div class="cart-update-submit">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21.2037 10.4471C21.2357 10.3908 21.2582 10.3296 21.2704 10.2661L21.985 6.45498C22.0305 6.20229 21.9737 5.94188 21.8272 5.73103C21.6807 5.52019 21.4564 5.37619 21.2037 5.33071C20.951 5.28522 20.6906 5.34198 20.4798 5.4885C20.2689 5.63502 20.1249 5.85929 20.0794 6.11198L19.7269 8.01752C18.9338 6.56923 17.7486 5.37378 16.3072 4.56829C14.8658 3.76279 13.2265 3.37985 11.5774 3.4634C9.92834 3.54695 8.33618 4.0936 6.98355 5.04065C5.63092 5.98771 4.57261 7.29682 3.92997 8.81785C3.8357 9.05163 3.83792 9.31324 3.93614 9.54539C4.03436 9.77754 4.22057 9.96131 4.45399 10.0565C4.57029 10.1046 4.69497 10.1292 4.82083 10.1289C4.9467 10.1286 5.07125 10.1034 5.1873 10.0546C5.30336 10.0059 5.4086 9.93468 5.49697 9.84504C5.58533 9.75541 5.65506 9.64916 5.70212 9.53243C6.21522 8.27172 7.09771 7.19573 8.23361 6.44583C9.36952 5.69592 10.7057 5.30719 12.0666 5.33071C13.2703 5.32509 14.454 5.63759 15.498 6.23656C16.542 6.83554 17.4093 7.69972 18.0119 8.74163L16.4399 8.48438C16.3147 8.46436 16.1869 8.46918 16.0636 8.49857C15.9404 8.52795 15.8241 8.58133 15.7215 8.65565C15.6189 8.72996 15.5319 8.82377 15.4655 8.9317C15.3991 9.03964 15.3547 9.15959 15.3346 9.28471C15.3146 9.40983 15.3194 9.53766 15.3488 9.66092C15.3782 9.78418 15.4316 9.90044 15.5059 10.0031C15.5802 10.1057 15.674 10.1927 15.782 10.2591C15.8899 10.3254 16.0098 10.3699 16.135 10.3899L20.1842 11.0664H20.3367C20.4473 11.0677 20.5572 11.0483 20.6606 11.0092C20.6955 10.996 20.7278 10.9766 20.7559 10.9521C20.8242 10.9267 20.8884 10.8913 20.9465 10.8473L21.0227 10.752C21.0721 10.7057 21.1168 10.6546 21.1561 10.5995C21.1792 10.5513 21.1953 10.4999 21.2037 10.4471Z" fill="#007AFF"/>
+            <path d="M19.5078 13.9723C19.3909 13.9244 19.2657 13.9003 19.1394 13.9012C19.0131 13.9022 18.8882 13.9282 18.7721 13.9779C18.6559 14.0275 18.5508 14.0998 18.4629 14.1904C18.3749 14.2811 18.3058 14.3883 18.2597 14.5059C17.743 15.7533 16.8638 16.817 15.736 17.5593C14.6081 18.3016 13.2834 18.6883 11.9333 18.6695C10.7297 18.6751 9.54592 18.3626 8.5019 17.7636C7.45787 17.1646 6.59064 16.3005 5.988 15.2586L7.56007 15.5158H7.71251C7.9652 15.536 8.21557 15.455 8.40855 15.2906C8.60152 15.1263 8.72129 14.8919 8.7415 14.6393C8.76172 14.3866 8.68073 14.1362 8.51634 13.9432C8.35196 13.7502 8.11765 13.6305 7.86495 13.6103L3.81568 12.9528C3.71175 12.9337 3.60519 12.9337 3.50126 12.9528H3.42504C3.31721 12.9815 3.2144 13.0265 3.12016 13.0862C3.05592 13.1359 2.99828 13.1935 2.94866 13.2577L2.86291 13.353C2.83346 13.4104 2.81106 13.4712 2.79621 13.534C2.76283 13.5827 2.7401 13.6379 2.72952 13.696L2.01494 17.5071C1.98434 17.6337 1.98003 17.7653 2.00228 17.8936C2.02453 18.022 2.07287 18.1444 2.1443 18.2534C2.21574 18.3623 2.30876 18.4554 2.41761 18.527C2.52646 18.5986 2.64883 18.6471 2.77716 18.6695H2.94866C3.17426 18.6732 3.39385 18.5966 3.56833 18.4536C3.74281 18.3105 3.86084 18.1102 3.90143 17.8882L4.25395 15.9827C5.0462 17.4313 6.23067 18.6273 7.67155 19.4336C9.11243 20.2399 10.7514 20.6237 12.4004 20.5412C14.0495 20.4586 15.6419 19.913 16.995 18.9669C18.3482 18.0207 19.4073 16.7124 20.0509 15.1919C20.1382 14.958 20.1302 14.6991 20.0287 14.4711C19.9271 14.243 19.7401 14.0639 19.5078 13.9723Z" fill="#007AFF"/>
+          </svg>
+          <input type="submit" name="update" value="{{'cart.general.update' | t }}">
+        </div>
+    </div>
   </form>
-</div>
 
+  <div class="cart-item-checkout" >
+    <div class="cart-item">
+      <p class="cart-item-title">You May Be Interested In</p>
+      {%- for product in collection.products limit: 3 -%}
+        <div class="cart-item-product">
+          <div class="cart-item-product-image">
+            <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.featured_image.alt}}">
+          </div>
+          <div class="cart-item-product-content">
+            <p class="cart-item-product-title">{{product.title}}</p>
+            {%- if product.compare_at_price > product.price -%}
+              <div class="cart-item-product-price-sale">
+                <span>{{product.price | money}}</span>
+              </div>
+              <div class="cart-item-product-price-sale-original">
+                <span>{{product.compare_at_price | money}}</span>
+              </div>
+            {%- else -%}
+              <div class="cart-item-product-price-original">
+                <p>{{product.compare_at_price | money}}</p>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="cart-checkout">
+      <div class="cart-subtotal">
+        <span class="cart-subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
+        <span class="cart-subtotal-value" data-cart-subtotal>{{ cart.total_price | money_with_currency }}</span>
+      </div>
+      <div class="cart-shipping">
+        {%- capture taxes_shipping_checkout -%}
+          {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+            {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+          {%- elsif cart.taxes_included -%}
+            {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+          {%- elsif shop.shipping_policy.body != blank -%}
+            {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+          {%- else -%}
+            {{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+          {%- endif -%}
+        {%- endcapture -%}
+        <span class="cart-shipping-title">Estimated Shipping</span>
+        <span class="cart-shipping-content">{{ shipping_method.price | money }}</span>
+      </div>
+      <div class="cart-select-country">
+        <select name="country">
+          <option disabled selected value="Select Country">Select Country</option>
+          {{country_option_tags}}
+        </select>
+      </div>
+      <div class="cart-input-state">
+        <input placeholder="State">
+      </div>
+      <div class="cart-input-zipcode">
+        <input placeholder="Postal/Zip Code">
+      </div>
+      <div class="cart-total">
+        <span class="cart-total-title">{{ 'cart.label.total' | t }}</span>
+        <span class="cart-total-value" data-cart-total>{{ cart.total_price | money_with_currency }}</span>
+      </div>
+      <div class="cart-total-submit">
+        <button type="submit">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% comment %} <div class="page-width" data-section-id="{{ section.id }}" data-section-type="cart-template" data-ajax-enabled="{{ section.settings.cart_ajax_enable }}">
@@ -387,7 +485,7 @@
     </div>
     <a href="{{ routes.root_url }}" class="btn btn--has-icon-after cart__continue-btn">{{ 'general.404.link' | t }}{% include 'icon-arrow-right' %}</a>
   </div>
-</div> {% endcomment %}
+</> {% endcomment %}
 {% schema %}
 {
   "name": {
@@ -492,6 +590,13 @@
         "zh-TW": "啟用購物車備註"
       },
       "default": false
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": {
+        "en": "Collection"
+      }
     }
   ]
 }
