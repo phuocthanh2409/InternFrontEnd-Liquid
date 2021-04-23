@@ -1581,6 +1581,7 @@ body{
             line-height: 43px;
             text-transform: uppercase;
             color: #14171A;
+            
         }
     }
     
@@ -2051,6 +2052,164 @@ body{
                     height: 48px;
                     color: #fff;
                     border: none;
+                }
+            }
+        }
+    }
+}
+
+.product-container{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 135px;
+    
+    
+
+    .product-detail{
+        padding-top:40px;
+        padding-bottom: 80px;
+        display: flex;
+        justify-content: space-between;
+
+        .product-slide{
+            width: 40%;
+
+            .product-slide-main{
+
+                img{
+                    width: 470px;
+                    height: 504px;
+                }
+            }
+
+            .product-slide-thumbnais{
+                display: flex;
+                padding-top: 20px;
+                img{
+                    width: 102px;
+                    height: 106px;
+                }
+            }
+        }
+
+        .product-infomation{
+            width: 60%;
+            padding-left: 30px;
+    
+            .product-infomation-vendor{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                color: #343F49;
+                padding-bottom: 8px;
+            }
+    
+            .product-infomation-title{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 22px;
+                line-height: 26px;
+                color: #14171A;
+                word-break: break-word;
+                padding-bottom: 16px;
+            }
+    
+            .product-infomartion-description{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 150%;
+                color: #7C7C7C;
+                word-break: break-word;
+                padding-bottom: 16px;
+            }
+    
+            .product-infomation-price{
+                padding-bottom: 25px;
+    
+                .product-infomation-price-sale{
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 22px;
+                    line-height: 26px;
+                    color: #E94141;
+                    padding-right: 12px;
+                }
+        
+                .product-infomation-price-original-sale{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 19px;
+                    text-decoration-line: line-through;
+                    color: #BABCBF;
+                    padding-right:12px;
+                }
+                .product-infomation-price-save{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 17px;
+                    color: #7C7C7C;
+                    padding-right: 8px;
+                }
+                .product-infomation-price-minus{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 17px;
+                    color: red;
+                }
+            } 
+            .product-infomation-price-original{
+                font-style: normal;
+                font-weight: bold;
+                font-size: 22px;
+                line-height: 26px;
+                color: #272E35;
+                padding-bottom: 34px;
+            }
+            .product-quantity{
+                display: flex;
+                .product-quantity-control{
+                    max-width: 96px;
+                    height: 48px;
+                    display: flex;
+                    background: #F6F6F6;
+                    border-radius: 2px;
+                    margin-right: 20px;
+                    input::-webkit-outer-spin-button,
+                    input::-webkit-inner-spin-button{
+                    -webkit-appearance: none;
+                    }
+        
+                    input{
+                        width: 30px;
+                        border: none;
+                        background: #F6F6F6;
+                        text-align: center;
+                    }
+        
+                    span{
+                        align-self: center;
+                        cursor: pointer;
+                        padding: 0 10px;
+                    }
+                }
+                
+                .product-quantity-button{
+                    height: 48px;
+                    width: 494px;
+                    button{
+                        background: #E94141;
+                        border-radius: 2px;
+                        height: 100%;
+                        width: 100%;
+                        color: #fff;
+                        border: none;
+                        box-shadow: none;
+                    }
                 }
             }
         }

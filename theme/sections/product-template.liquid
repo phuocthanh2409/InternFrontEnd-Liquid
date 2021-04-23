@@ -1,28 +1,138 @@
+{%- liquid 
+  assign available = product.available  
+  assign current_variant = product.selected_or_first_available_variant
+  assign compare_at_price = current_variant.compare_at_price
+  assign price = current_variant.price
+-%}
 <div class="product-container" id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="product"
   data-enable-history-state="true">
-  <div class="product-detail">
-    <div class="product-slide">
-
+  <div class="product-detail" data-section-type="slideshow">
+    <div class="product-slide" id="product-slide-{{section.id}}">
+      <div class="product-slide-main" id="product-slide-main-{{section.id}}" >
+          {%- for image in product.images -%}
+            <div>
+                <img src="{{ image.src | product_img_url: 'medium' }}">
+            </div>
+          {%- endfor -%}
+      </div>
+      <ul class="product-slide-thumbnais" id="product-thumbnails-{{section.id}}">
+          {%- for image in product.images -%}
+              <li><img src="{{ image.src | product_img_url: 'medium' }}" ></li>
+          {%- endfor -%}
+      </ul>
     </div>
+    <script type="application/json" data-tns-config>
+      {
+        "container": "#product-slide-main-{{section.id}}",
+        "items": 1,
+        "navContainer": "#product-thumbnails-{{section.id}}",
+        "autoplay": true,
+        "autoplayTimeout": 1500,
+        "swipeAngle": false,
+        "speed": 400,
+        "mouseDrag": true,
+        "autoplayButtonOutput": false,
+        "controls": false
+      }
+    </script>
+    <script type="application/json" data-tns-config>
+      {
+        "container": "#product-thumbnails-{{section.id}}",
+        "items": 4,
+        "slideBy": "page",
+        "mouseDrag": true,
+        "swipeAngle": false,
+        "speed": 400,
+        "nav": false,
+        "controls": false
+      }
+    </script>
     <div class="product-infomation">
-      <a>{% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}  {{ product.title }}</a>
-      <h1></h1>
-      <p></p>
-      <span></span>
-      <span></span>
-      <span></span>
-      <p></p>
-      
+      <a class="product-infomation-vendor">{{product.vendor}}</a>
+      <h1 class="product-infomation-title">{{ product.title }}</h1>
+      <p class="product-infomartion-description">{{product.description}}</p>
+      {%- if product.compare_at_price > product.price -%}
+        <div class="product-infomation-price">
+          <span class="product-infomation-price-sale">{{product.price | money}}</span>
+          <span class="product-infomation-price-original-sale">{{product.compare_at_price | money}}</span>
+          <span class="product-infomation-price-save">| You save </span>
+          <span class="product-infomation-price-minus">{{product.compare_at_price | minus: product.price | money}} ({{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%)</span>
+        </div>
+      {%- else -%}
+        <div>
+          <p class="product-infomation-price-original">{{product.compare_at_price | money}}</p>
+        </div>
+      {%- endif -%}
+      <form action="/cart/add" data-productid="{{product.id}}" method="post">
+          {% if product.variants.size > 1 %}
+          <div class="product-options">
+            <select name="id" data-productid="{{product.id}}" id="product-select" class="product-select">
+              {% for variant in product.variants %}
+                <option {% if variant == selectedVariant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% else %}
+            <input type="hidden" name="id" data-productid="{{product.id}}" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+          {% endif %}
+          <div class="product-quantity-control">
+            <span id="down-{{item.id}}">-</span>
+            <input type="number" value="1" min="1" id="quantity" name="quantity" data-quantity-item="{{forloop.index}}">
+            <span id="up-{{item.id}}">+</span>
+            <script>
+              document.getElementById('down-{{item.id}}').addEventListener('click',function(){
+                  let input = this.nextElementSibling;
+                  let value = +input.value;
+                  if(value>1)
+                  {
+                      value= isNaN(value) ? 0 : value;
+                      value--;
+                      input.value=value;
+                  }
+              });
+              document.getElementById('up-{{item.id}}').addEventListener('click',function(){
+                  let input = this.previousElementSibling;
+                  let value = +input.value
+                      value= isNaN(value) ? 0 : value;
+                      value++;
+                      input.value=value;
+              });
+            </script>
+          </div>
+          <div class="add-to-cart">
+            {% if product.available %}
+              <div class="product-form-submit-wrap">
+                <input type="submit" value="{{ 'products.product.add_to_cart' | t }}" />
+                <div class="add-to-cart-loader"></div>
+              </div>
+              {% capture cart_link %}
+                <a href="/cart">{{ 'products.product.cart_link' | t }}</a>
+              {% endcapture %}
+              {% capture continue_link %}
+                <a href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+              {% endcapture %}
+              {% capture checkout_link %}
+                <a href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+              {% endcapture %}
+              {% capture product_item %}
+                <span class='added-product-name'></span>
+              {% endcapture %}
+              <p class="product-add-success-message">{{ 'products.product.success_html' | t: cart_link: cart_link, continue_link: continue_link, checkout_link: checkout_link, product: product_item  }}</p>
+              <p class="product-add-error-message"></p>
+            {% else %}
+              <input type="button" class="disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+            {% endif %}
+          </div>
+      </form>
     </div>
   </div>
-  <div></div>
 </div>
 
 
 
-<div class="product-template__container page-width"
+{% comment %} <div class="product-template__container page-width"
   id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
   data-section-type="product"
@@ -308,7 +418,7 @@
   <script type="application/json" id="ModelJson-{{ section.id }}">
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
-{% endunless %}
+{% endunless %} {% endcomment %}
 
 {% schema %}
 {
