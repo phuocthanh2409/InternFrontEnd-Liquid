@@ -1,6 +1,6 @@
-<div class="page-width">
+{% comment %} <div class="collection-list-container">
   {% if section.settings.title != blank %}
-    <div class="section-header text-center">
+    <div class="collection-list-title">
       <h2>{{ section.settings.title | escape }}</h2>
     </div>
   {% endif %}
@@ -30,9 +30,7 @@
   {% if section.blocks.size == 0 %}
     {% include 'no-blocks' %}
   {% endif %}
-</div>
-
-
+</div> {% endcomment %}
 
 {% schema %}
 {

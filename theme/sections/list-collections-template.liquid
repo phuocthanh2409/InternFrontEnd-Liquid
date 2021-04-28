@@ -1,5 +1,5 @@
-<div class="page-width">
-  <header class="section-header text-center">
+<div class="collection-list-container">
+  <header class="collection-list-title">
     <h1>{{ page_title }}</h1>
   </header>
 
@@ -20,7 +20,7 @@
       {%- assign image_size = '225x' -%}
   {% endcase %}
 
-  <ul class="grid grid--uniform">
+  <ul class="grid-container">
     {% if section.settings.display_type == 'all' %}
       {% case section.settings.sort %}
         {% when 'products_high' or 'products_low' %}

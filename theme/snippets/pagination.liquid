@@ -1,44 +1,69 @@
-{% comment %}
-    Renders a pagination bar
+ <nav role="navigation">
+    <ol class="pagination">
+      {%- if paginate.previous-%}
+        <li>
+          <a href="{{ paginate.previous.url }}">
+            <span aria-hidden="true">&laquo;</span>
+            Previous <span class="visuallyhidden">page</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled">
+          <span aria-hidden="true">&laquo;</span>
+          Previous <span class="visuallyhidden">page</span>
+        </li>
+      {%- endif -%}
 
-    Accepts:
-    - paginate: {Object} Paginate Liquid object (required)
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+          <li>
+            <a href="{{ part.url }}">
+              <span class="visuallyhidden">page</span> {{ part.title }}
+            </a>
+          </li>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <li class="active" aria-current="page">
+              <span class="visuallyhidden">page</span> {{ part.title }}
+            </li>
+          {%- else -%}
+            <li>
+              <span class="visuallyhidden">page</span> {{ part.title }}
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
 
-    Usage:
-    {% include 'pagination', paginate: paginate %}
-{% endcomment %}
-<ul class="list--inline pagination">
-  {% unless paginate.previous.is_link %}
-    <li aria-hidden="true">
-      <button class="btn btn--tertiary btn--narrow" disabled>
-        {% include 'icon-arrow-left' %}
-        <span class="icon__fallback-text">{{ 'general.pagination.previous' | t }}</span>
-      </button>
-    </li>
-    {% else %}
-    <li>
-      <a href="{{ paginate.previous.url }}" class="btn btn--tertiary btn--narrow">
-        {% include 'icon-arrow-left' %}
-        <span class="icon__fallback-text">{{ 'general.pagination.previous' | t }}</span>
-      </a>
-    </li>
-  {% endunless %}
-  <li class="pagination__text">
-    {{ 'general.pagination.current_page' | t: current: paginate.current_page, total: paginate.pages }}
-  </li>
-  {% unless paginate.next.is_link %}
-    <li aria-hidden="true">
-      <button class="btn btn--tertiary btn--narrow" disabled>
-        {% include 'icon-arrow-right' %}
-        <span class="icon__fallback-text">{{ 'general.pagination.next' | t }}</span>
-      </button>
-    </li>
-  {% else %}
-    <li>
-      <a href="{{ paginate.next.url }}" class="btn btn--tertiary btn--narrow">
-        {% include 'icon-arrow-right' %}
-        <span class="icon__fallback-text">{{ 'general.pagination.next' | t }}</span>
-      </a>
-    </li>
-  {% endunless %}
-</ul>
+      {%- if paginate.next -%}
+        <li>
+          <a href="{{ paginate.next.url }}">
+            Next <span class="visuallyhidden">page</span>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {%- else -%}
+        <li class="disabled">
+          Next <span class="visuallyhidden">page</span>
+          <span aria-hidden="true">&raquo;</span>
+        </li>
+      {%- endif -%}
+    </ol>
+  </nav>
+  <style>
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+  
+.pagination li {
+  display: inline; 
+  margin: 0 5px;
+}
+</style>

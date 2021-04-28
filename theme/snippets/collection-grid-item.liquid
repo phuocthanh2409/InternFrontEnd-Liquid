@@ -18,6 +18,7 @@
 <div class="collection-grid-item">
   <a href="{% if collection.products == empty %}#{% else %}{{ collection.url }}{% endif %}" class="collection-grid-item__link">
     {% unless collection_image == blank %}
+      <img src="{% if collection.image %} {{ collection.image | img_url: 'medium' }} {% endif %}">
       <div class="collection-grid-item__overlay box ratio-container lazyload js"
         data-bgset="{% include 'bgset', image: collection_image %}"
         data-sizes="auto"

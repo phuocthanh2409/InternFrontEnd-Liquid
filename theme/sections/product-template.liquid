@@ -53,7 +53,7 @@
     <div class="product-infomation">
       <a class="product-infomation-vendor">{{product.vendor}}</a>
       <h1 class="product-infomation-title">{{ product.title }}</h1>
-      <p class="product-infomartion-description">{{ my_description[0] }}</p>
+      <div class="product-infomation-description">{{ my_description[0] }}</div>
       {%- if product.compare_at_price > product.price -%}
         <div class="product-infomation-price">
           <span class="product-infomation-price-sale">{{product.price | money}}</span>
@@ -125,7 +125,9 @@
                 <span class='added-product-name'></span>
               {% endcapture %}
             {% else %}
+            <div class="product-form-submit-soldout">
               <input type="button" class="disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+            </div>
             {% endif %}
           </div>
       </form>
@@ -155,13 +157,13 @@
     </button>
   </div>
   <div class="tabcontent" id="description-one">
-    <p>{{ my_description[1] }}</p>
+    <div class="tabcontent-content">{{ my_description[1] }}</div>
   </div>
   <div class="tabcontent" id="description-two">
-    <p>{{ my_description[2] }}</p>
+    <div class="tabcontent-content">{{ my_description[2] }}</div>
   </div>
   <div class="tabcontent" id="description-three">
-    <p>{{ my_description[3] }}</p>
+    <div class="tabcontent-content">{{ my_description[3] }}</div>
   </div>
   </div>
   <script>
