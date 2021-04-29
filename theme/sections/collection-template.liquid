@@ -5,23 +5,37 @@
   <div class="collection-item-content">
     <div class="collection-item-categories">
       <h1>Categories</h1>
-      {% if section.settings.tags_enable %}
-        {% unless collection.all_tags.size == 0 %}
-          <div class="filters-toolbar__item-child">
-            <label class="filters-toolbar__label select-label" for="FilterTags">{{ 'collections.filters.title_tags' | t }}</label>
-            <div class="filters-toolbar__input-wrapper select-group">
-              <select class="filters-toolbar__input hidden" name="FilterTags" id="FilterTags" aria-describedby="a11y-refresh-page-message a11y-selection-message" data-select-input>
-                <option value="{{ collection.url }}">{{ 'collections.filters.all_tags' | t }}</option>
-                {% for tag in collection.all_tags %}
-                  {%- assign new_url = tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first -%}
-                  <option value="{{ new_url }}"{% if current_tags contains tag %} selected="selected"{% endif %}>{{ tag }}</option>
-                {% endfor %}
-              </select>
-              {% include 'icon-chevron-down' %}
-            </div>
-          </div>
-        {% endunless %}
-      {% endif %}
+      <hr>
+      <div class="collection-item-categories-content">
+        <div class="collection-item-categories-title">
+          <span>123</span>
+        </div>
+        <input type="checkbox">
+        <div class="collection-item-categories-tag">
+          <ul>
+            <li>
+              <a href="#">
+                <span>1</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>2</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>3</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>4</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="collection-item-product">
       {%- paginate collection.products by 10 -%}
@@ -36,8 +50,8 @@
             Showing products {{ paginate.current_offset | plus: 1 }} - {{ paginate.current_offset | plus: itemsOnCurrentPage }} of {{ collection.all_products_count }}
           {% endif %}
         </p>
-        <div>
-          <label for="SortBy">Sort by</label>
+        <div class="collection-item-product-sort">
+          <label for="SortBy">Sort by: </label>
           <select name="SortBy" id="SortBy">
               {% for option in collection.sort_options %}
                   <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>

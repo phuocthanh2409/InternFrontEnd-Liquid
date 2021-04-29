@@ -2411,6 +2411,17 @@ body{
                 line-height: 19px;
                 color: #14171A;
             }
+            .collection-item-categories-content{
+                
+                .collection-item-categories-title{
+                    
+                }
+                
+                .collection-item-categories-tag{
+
+                }
+            }
+
         }
         .collection-item-product{
             width: 75%;
@@ -2426,6 +2437,15 @@ body{
                     line-height: 17px;
                     color: #343F49;
                 }
+            }
+            .collection-item-product-sort{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 17px;
+                display: flex;
+                align-items: center;
+                color: #272E35;
             }
 
             .collecion-item-product-grid{
