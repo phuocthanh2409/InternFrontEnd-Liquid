@@ -1,26 +1,17 @@
+{%- liquid 
+  assign setting = section.settings 
+  assign limit = section.settings.columns | times: section.settings.rows
+-%}
+
+{%- paginate collections by limit -%}
 <div class="collection-list-container">
   <header class="collection-list-title">
     <h1>{{ page_title }}</h1>
   </header>
+  
+  {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%} 
 
-  {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
-
-  {% case section.settings.grid %}
-    {% when 2 %}
-      {%- assign grid_item_width = 'medium-up--one-half' -%}
-      {%- assign image_size = '530x' -%}
-    {% when 3 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
-      {%- assign image_size = '350x' -%}
-    {% when 4 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
-      {%- assign image_size = '250x' -%}
-    {% when 5 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
-      {%- assign image_size = '225x' -%}
-  {% endcase %}
-
-  <ul class="grid-container">
+  <ul id="grid-container">
     {% if section.settings.display_type == 'all' %}
       {% case section.settings.sort %}
         {% when 'products_high' or 'products_low' %}
@@ -50,8 +41,21 @@
       {% endfor %}
     {% endif %}
   </ul>
+  {%- if paginate.pages > 1 -%}
+      {% render 'pagination', paginate: paginate %}
+  {%- endif -%}
+  {%- assign index = shop.collections_count -%}
+  {%- style -%}
+    #grid-container{
+      display: grid;
+      grid-template-columns: repeat({{ setting.columns }}, 1fr);
+      grid-template-rows: repeat({{ setting.rows }},minmax(0,1fr));
+      grid-gap: 50px 50px;
+      padding: 20px;
+    }
+  {%- endstyle -%}
 </div>
-
+{% endpaginate %}
 
 
 {% schema %}
@@ -80,6 +84,28 @@
     "zh-TW": "商品系列清單頁面"
   },
   "settings": [
+      {
+        "type" : "range",
+        "id": "columns",
+        "label": {
+          "en" : "Column"
+        },
+        "step": 1,
+        "min" : 2,
+        "max" : 4,
+        "default" : 3 
+      },
+      {
+        "type" : "range",
+        "id": "rows",
+        "label": {
+          "en" : "Rows"
+        },
+        "step": 1,
+        "min" : 2,
+        "max" : 4,
+        "default" : 3 
+      },
     {
       "type": "paragraph",
       "content": {
@@ -424,8 +450,8 @@
         "zh-TW": "每列商品系列數"
       },
       "default": 3,
-      "min": 2,
-      "max": 5,
+      "min": 1,
+      "max": 4,
       "step": 1
     }
   ],

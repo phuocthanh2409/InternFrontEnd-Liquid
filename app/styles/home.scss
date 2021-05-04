@@ -2330,12 +2330,12 @@ body{
         padding-bottom: 50px;
     }
 
-    .grid-container{
+    /* .grid-container{
         display: grid;
         grid-gap: 50px 50px;
         grid-template-columns: auto auto auto;
         padding: 20px;
-    }
+    }  */
 
     .collection-grid-item{
         height: 300px;
@@ -2403,25 +2403,87 @@ body{
         {   
             margin-right: 30px;
             width: 25%;
-
             h1{
                 font-style: normal;
                 font-weight: bold;
                 font-size: 16px;
                 line-height: 19px;
                 color: #14171A;
+                padding-bottom: 13px;
             }
-            .collection-item-categories-content{
-                
-                .collection-item-categories-title{
-                    
-                }
-                
-                .collection-item-categories-tag{
-
+            .line-content{
+                position: relative;
+                margin-bottom: 20px;
+                width: 100%;
+                background-color: #F6F6F6;
+                height: 2px;
+                &::after{
+                    content: "";
+                    border-top: 4px solid #e94141;
+                    width: 25%;
+                    background: #e94141;
+                    position: absolute;
+                    top: -2px;
+                    left: 0;
                 }
             }
-
+            .setting{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                cursor: pointer;
+                margin-bottom: 15px;
+                .icon-arrow{
+                    margin-right: 8px;
+                    width: 24px;
+                    height: 24px;
+                    transform: rotate(180deg);
+                    transition: all .5s ease;
+                    svg{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+            .active-1 > .icon-arrow{
+                transform: rotate(360deg);
+                transition: all .5s ease;
+            }
+            .collapsible {
+                background-color: #FFFFFF;
+                font-size: 14px;
+                line-height: 17px;
+                color: #272E35;
+                cursor: pointer;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                padding: 0;
+            }
+            .content {
+                
+                text-transform: uppercase;
+                text-align: left;
+                font-size: 14px;
+                line-height: 17px;
+                color: #343F49;
+    
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+    
+                a{
+                    text-decoration: none;
+                    display: block;
+                    margin-bottom: 12px;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 17px;
+                    color: #343F49;
+                }
+            }
         }
         .collection-item-product{
             width: 75%;
