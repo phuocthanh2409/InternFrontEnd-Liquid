@@ -1,6 +1,75 @@
 {% paginate blog.articles by 12 %}
 
-<div class="page-width">
+
+<div class="blog-template-container">
+  <h1>{{page_title}}</h1>
+  <div class="blog-template-main">
+    <div class="blog-template-content">
+      {% for article in blog.articles %}
+        {% if forloop.first == true %}
+          <div class="blog-template-grid-first">
+            <div class="blog-template-grid-first-image">
+              <img src="{{article.image.src | img_url: '500x'}}">
+            </div>
+            <div class="blog-template-grid-first-title">
+              <a href="{{ article.url }}">
+                <h2>
+                  {{ article.title | escape }}
+                </h2>
+              </a>
+            </div>
+            <div class="blog-template-grid-first-date">
+              <p>
+                {{ article.published_at | time_tag: format: 'date' }}
+              </p>
+            </div>
+            <div class="blog-template-grid-first-excerpt">
+              <p>
+                {{ article.excerpt }}
+              </p>
+            </div>
+            <div class="blog-template-grid-first-button">
+              <a href="{{ article.url }}">
+                {{ 'blogs.article.read_more' | t}}
+              </a>
+            </div>
+          </div>
+        {% else %}
+          <div class="blog-template-grid">
+            <div class="blog-template-grid-image">
+              <img src="{{article.image.src | img_url: '500x'}}">
+            </div>
+            <div class="blog-template-grid-title">
+              <a href="{{ article.url }}">
+                <h2>
+                  {{ article.title | escape }}
+                </h2>
+              </a>
+            </div>
+            <div class="blog-template-grid-date">
+              <p>
+                {{ article.published_at | time_tag: format: 'date' }}
+              </p>
+            </div>
+            <div class="blog-template-grid-excerpt">
+              <p>
+                {{ article.excerpt }}
+              </p>
+            </div>
+            <div class="blog-template-grid-button">
+              <a href="{{ article.url }}">
+                {{ 'blogs.article.read_more' | t}}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div></div>
+  </div>
+</div>
+
+{% comment %} <div class="blog-template-container">
   <header class="section-header text-center">
     <h1>{{ page_title }}</h1>
     {% if blog.tags.size > 0 %}
@@ -18,10 +87,10 @@
       </div>
     {% endif %}
   </header>
-</div>
+</div> {% endcomment %}
 
 
-{% if section.settings.layout == 'grid' %}
+{% comment %} {% if section.settings.layout == 'grid' %}
   <div class="page-width">
     <ul class="grid grid--uniform grid--blog">
       {% for article in blog.articles %}
@@ -193,7 +262,7 @@
       </li>
     {% endfor %}
   </ul>
-{% endif %}
+{% endif %} {% endcomment %}
 
 {%- if paginate.pages > 1 -%}
   {% include 'pagination', paginate: paginate %}

@@ -1,3 +1,8 @@
+{%- liquid 
+  assign setting = section.settings 
+  assign limit = section.settings.collection-columns | times: section.settings.collection-rows
+-%}
+
 <div class="collection-item-container" data-section-id="{{ section.id }}" data-section-type="collection-template">
   <header class="collection-item-header">
     {{collection.description}} 
@@ -46,7 +51,7 @@
     </div>
 
     <div class="collection-item-product">
-      {%- paginate collection.products by 10 -%}
+      {%- paginate collection.products by limit -%}
       <div class="collecion-item-product-function">
         <p>
           {% if paginate.next.is_link %}
@@ -121,16 +126,16 @@
           <div class="collection-item-product-grid-button">
             <div class="collection-item-product-grid-price">
               {%- if product.compare_at_price > product.price -%}
-                <div class="collection-item-product-grid-price-sale">
+                <p class="collection-item-product-grid-price-sale">
                   {{product.price | money}}
-                </div>
-                <div class="collection-item-product-grid-price-sale-original">
+                </p>
+                <p class="collection-item-product-grid-price-sale-original">
                   {{product.compare_at_price | money}}
-                </div>
+                </p>
               {%- else -%}
-                <div class="collection-item-product-grid-price-original">
+                <p class="collection-item-product-grid-price-original">
                   {{product.compare_at_price | money}}
-                </div>
+                </p>
               {%- endif -%}
             </div>
             <div class="collection-item-product-grid-button">
@@ -145,7 +150,7 @@
                   </button>
                 {%- endform -%}
               {%- else -%}
-                <p>Sold out</p>
+                <p class="collection-item-product-sold-out">Sold out</p>
               {%- endif -%}
             </div>
           </div>
@@ -155,6 +160,15 @@
       {%- if paginate.pages > 1 -%}
           {% render 'pagination', paginate: paginate %}
       {%- endif -%}
+      {%- style -%}
+        .collecion-item-product-grid{
+          display: grid;
+          grid-column-gap: 50px;
+          grid-template-columns: repeat({{ setting.collection-columns }}, minmax(0,1fr));
+          grid-template-rows: repeat({{ setting.collection-rows }},minmax(0,1fr));
+          padding: 10px;
+        }
+      {%- endstyle -%}
     </div>
   </div>
 </div>
@@ -426,14 +440,25 @@
   "settings": [
     {
       "type" : "range",
-      "id": "col",
+      "id": "collection-columns",
       "label": {
-        "en" : "col"
+        "en" : "Columns"
       },
       "step": 1,
       "min" : 2,
       "max" : 4,
-      "default" : 2 
+      "default" : 3 
+    },
+    {
+      "type" : "range",
+      "id": "collection-rows",
+      "label": {
+        "en" : "Rows"
+      },
+      "step": 1,
+      "min" : 2,
+      "max" : 4,
+      "default" : 3 
     },
     {
       "type": "select",
