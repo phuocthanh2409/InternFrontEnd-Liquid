@@ -7,61 +7,65 @@
     <div class="blog-template-content">
       {% for article in blog.articles %}
         {% if forloop.first == true %}
-          <div class="blog-template-grid-first">
-            <div class="blog-template-grid-first-image">
-              <img src="{{article.image.src | img_url: '500x'}}">
+          <div class="blog-template-first">
+            <div class="blog-template-first-image">
+              <a href="{{ article.url }}">
+                <img src="{{article.image.src | img_url: '500x'}}">
+              </a>
             </div>
-            <div class="blog-template-grid-first-title">
+            <div class="blog-template-first-title">
               <a href="{{ article.url }}">
                 <h2>
                   {{ article.title | escape }}
                 </h2>
               </a>
             </div>
-            <div class="blog-template-grid-first-date">
+            <div class="blog-template-first-date">
               <p>
                 {{ article.published_at | time_tag: format: 'date' }}
               </p>
             </div>
-            <div class="blog-template-grid-first-excerpt">
+            <div class="blog-template-first-excerpt">
               <p>
                 {{ article.excerpt }}
               </p>
             </div>
-            <div class="blog-template-grid-first-button">
+            <div class="blog-template-first-button">
               <a href="{{ article.url }}">
                 {{ 'blogs.article.read_more' | t}}
               </a>
             </div>
           </div>
         {% else %}
-          <div class="blog-template-grid">
-            <div class="blog-template-grid-image">
+        <div class="blog-template-grid">
+          <div class="blog-template-grid-image">
+            <a href="{{ article.url }}">
               <img src="{{article.image.src | img_url: '500x'}}">
-            </div>
-            <div class="blog-template-grid-title">
-              <a href="{{ article.url }}">
-                <h2>
-                  {{ article.title | escape }}
-                </h2>
-              </a>
-            </div>
-            <div class="blog-template-grid-date">
-              <p>
-                {{ article.published_at | time_tag: format: 'date' }}
-              </p>
-            </div>
-            <div class="blog-template-grid-excerpt">
-              <p>
-                {{ article.excerpt }}
-              </p>
-            </div>
-            <div class="blog-template-grid-button">
-              <a href="{{ article.url }}">
-                {{ 'blogs.article.read_more' | t}}
-              </a>
-            </div>
+            </a>
           </div>
+          <div class="blog-template-grid-title">
+            <a href="{{ article.url }}">
+              <h2>
+                {{ article.title | escape }}
+              </h2>
+            </a>
+          </div>
+          <div class="blog-template-grid-date">
+            <p>
+              {{ article.published_at | time_tag: format: 'date' }}
+            </p>
+          </div>
+          <div class="blog-template-grid-excerpt">
+            <p>
+              {{ article.excerpt }}
+            </p>
+          </div>
+          <div class="blog-template-grid-button">
+            <a href="{{ article.url }}">
+              {{ 'blogs.article.read_more' | t}}
+            </a>
+          </div>
+        </div>
         {% endif %}
       {% endfor %}
     </div>

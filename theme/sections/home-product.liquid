@@ -34,6 +34,29 @@
                             {%- render 'product-list' product:product -%}
                         </div>
                     {%- endfor -%}
+                    <script>
+                        function myForm(id) {
+                            let addData = {
+                                'id' : id,
+                                'quantity' : 1
+                            };
+                            fetch('/cart/add.js', {
+                            method: 'POST',
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                                },
+                                credentials: 'same-origin',
+                                body: JSON.stringify(addData)
+                            })
+                            .then(response => {
+                                return response.json();  
+                                })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                        }
+                    </script>
                 </div>
             {%- when '2' -%}
                 <div id="home-product-slide-{{section.id}}">

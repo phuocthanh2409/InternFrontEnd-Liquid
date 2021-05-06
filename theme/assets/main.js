@@ -21,9 +21,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
     slideshow.forEach(section => {
         let configList = section.querySelectorAll('[data-tns-config]');
         configList.forEach(config => {
-            console.log(config);
             tns(JSON.parse(config.innerHTML))
         })
     })
 
+    async function addItem(variantId, quantity) {
+        const result = await fetch("/cart/add.json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                id: variantId,
+                quantity: quantity
+            })
+        })
+    }
 });

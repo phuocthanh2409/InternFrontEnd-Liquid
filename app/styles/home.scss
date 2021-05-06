@@ -2718,11 +2718,16 @@ body{
     .blog-template-main{
         display: flex;
         .blog-template-content{
-            width: 70%;
-            .blog-template-grid-first{
-                width: 100%;
+            width: 75%;
+            display: grid;
+            grid-template-columns: repeat( 2 , minmax(0,1fr));
+            grid-gap: 30px;
 
-                .blog-template-grid-first-image{
+            .blog-template-first{
+                width: 100%;
+                grid-column: 1 / 3;
+
+                .blog-template-first-image{
                     width: 100%;
                     height: 390px;
                     padding-bottom: 16px;
@@ -2732,7 +2737,7 @@ body{
                         height: 100%;
                     }
                 }
-                .blog-template-grid-first-title{
+                .blog-template-first-title{
                     padding-bottom: 8px;
                     a{
                         text-decoration: none;
@@ -2748,7 +2753,7 @@ body{
                         }
                     }
                 }
-                .blog-template-grid-first-date{
+                .blog-template-first-date{
                     padding-bottom: 16px;
                     p{
                         font-style: normal;
@@ -2758,7 +2763,7 @@ body{
                         color: #BABCBF;
                     }
                 }
-                .blog-template-grid-first-excerpt{
+                .blog-template-first-excerpt{
                     padding-bottom: 24px;
                     p{
                         font-style: normal;
@@ -2768,7 +2773,7 @@ body{
                         color: #343F49;
                     }
                 }
-                .blog-template-grid-first-button{
+                .blog-template-first-button{
                     padding-bottom: 60px;
                     a{
                         width: 120px;
@@ -2789,20 +2794,72 @@ body{
                 }
             }
             .blog-template-grid{
-                .blog-template-grid-image{
+                width: 100%;
 
+                .blog-template-grid-image{
+                    width: 100%;
+                    height: 260px;
+                    padding-bottom: 16px;
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
                 .blog-template-grid-title{
+                    padding-bottom: 8px;
+                    a{
+                        text-decoration: none;
 
+                        h2{
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 22px;
+                            line-height: 26px;
+                            display: flex;
+                            align-items: center;
+                            color: #14171A;
+                        }
+                    }
                 }
                 .blog-template-grid-date{
-
+                    padding-bottom: 16px;
+                    p{
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 16px;
+                        line-height: 19px;
+                        color: #BABCBF;
+                    }
                 }
                 .blog-template-grid-excerpt{
-
+                    padding-bottom: 24px;
+                    p{
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 150%;
+                        color: #343F49;
+                    }
                 }
                 .blog-template-grid-button{
-
+                    padding-bottom: 60px;
+                    a{
+                        width: 120px;
+                        height: 36px;
+                        background: #272E35;
+                        border-radius: 2px;
+                        align-items: center;
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        text-decoration: none;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 14px;
+                        color: #FFFFFF;
+                    }
                 }
             }
         }
