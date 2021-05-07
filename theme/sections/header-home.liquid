@@ -84,7 +84,7 @@
                         <a href="{{routes.root_url}}">WISHLIST</a>
                     </li>
                     <li class="header-menu-item-right">
-                        <a href="{{routes.cart_url}}">CART({{cart.item_count}})</a>
+                        <a href="{{routes.cart_url}}" >CART(<span id="cart_item_count"></span>)</a>
                     </li>
                     <li class="header-menu-item-right">
                         <a href="{{routes.root_url}}">US</a>
@@ -94,6 +94,10 @@
         </div>
     </header>
 </div>
+
+<script>
+    Shopify.item_count = {{cart.item_count}};
+</script>
 
 {% schema %}
 {

@@ -35,26 +35,33 @@
                         </div>
                     {%- endfor -%}
                     <script>
-                        function myForm(id) {
-                            let addData = {
-                                'id' : id,
-                                'quantity' : 1
-                            };
-                            fetch('/cart/add.js', {
-                            method: 'POST',
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Accept": "application/json"
+                        async function myForm(id) {
+                            const item = await addItem(id,1);
+                            const cart= await getCart();
+                            Shopify.item_count = cart.item_count;
+                            showItemCart();
+                        }
+                        async function addItem(variantId, quantity) {
+                            const result = await fetch("/cart/add.js", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json"
                                 },
-                                credentials: 'same-origin',
-                                body: JSON.stringify(addData)
-                            })
-                            .then(response => {
-                                return response.json();  
+                                body: JSON.stringify({
+                                    id: variantId,
+                                    quantity: quantity
                                 })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                            });
+                            })
+                        }
+                        async function getCart() {
+                            const result = await fetch("/cart.js");
+
+                            if (result.status === 200) {
+                                return result.json();
+                            }
+
+                            throw new Error(`Failed to get request, Shopify returned ${result.status} ${result.statusText}`);
                         }
                     </script>
                 </div>

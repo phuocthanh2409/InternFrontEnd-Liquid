@@ -39,3 +39,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         })
     }
 });
+function showItemCart(){
+    document.getElementById("cart_item_count").innerHTML = Shopify.item_count;
+}
+showItemCart();
