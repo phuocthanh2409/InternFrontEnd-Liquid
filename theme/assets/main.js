@@ -24,20 +24,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             tns(JSON.parse(config.innerHTML))
         })
     })
-
-    async function addItem(variantId, quantity) {
-        const result = await fetch("/cart/add.json", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: variantId,
-                quantity: quantity
-            })
-        })
-    }
 });
 function showItemCart(){
     document.getElementById("cart_item_count").innerHTML = Shopify.item_count;
