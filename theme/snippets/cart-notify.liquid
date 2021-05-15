@@ -1,0 +1,46 @@
+<div class="modal" id="myModal">
+    <div class="close modal-overlay"></div>
+    <div class="modal-content" id="modalContent">
+        <span class="close">&times;</span>
+        <p class="modal-headline">
+            <span>
+                <svg class="svg-check" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="13" height="13" viewBox="0 0 405.272 405.272" style="enable-background:new 0 0 405.272 405.272;" xml:space="preserve"><path d="M393.401,124.425L179.603,338.208c-15.832,15.835-41.514,15.835-57.361,0L11.878,227.836 c-15.838-15.835-15.838-41.52,0-57.358c15.841-15.841,41.521-15.841,57.355-0.006l81.698,81.699L336.037,67.064 c15.841-15.841,41.523-15.829,57.358,0C409.23,82.902,409.23,108.578,393.401,124.425z"></path> </svg>
+            </span>
+            {{'cart.popup.added_to_cart' | t}}
+        </p>
+        <div class="modal-product">
+            <div class="image js-image">
+            </div>
+            <div class="modal-product-info">
+                <p class="title js-title"></p>
+                <div class="modal-quantity">
+                    <span>{{'cart.label.quantity' | t}}:</span>
+                    <p class="quantity js-quantity"></p>
+                </div>
+                <div class="modal-price">
+                    <span>{{'cart.label.total' | t}}:</span>
+                    <p class="price js-price"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-action">
+            <div class="modal-quantity-cart">
+                <span>There are</span>
+                <p class="quantity-cart js-quantity-cart"></p>
+                <span>in your cart</span>
+            </div>
+            <div class="modal-price-total">
+                <span>{{'cart.label.total' | t}}:</span>
+                <p class="price-total js-price-total"></p>
+            </div>
+        </div>
+        <div class="modal-button">
+            <div class="modal-continue">
+                <a href="javascript:void(0)" onclick="document.getElementById('myModal').removeClass('is-open');document.body.removeClass('overflow-hidden');">{{'cart.general.continue_shopping' | t}}</a>
+            </div>
+            <div class="modal-checkout">
+                <a href="/cart">{{'cart.general.checkout' | t}}</a>
+            </div>
+        </div>
+    </div>
+</div>

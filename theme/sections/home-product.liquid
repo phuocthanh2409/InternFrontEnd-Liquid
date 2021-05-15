@@ -34,6 +34,7 @@
                             {%- render 'product-list' product:product -%}
                         </div>
                     {%- endfor -%}
+                    
                 </div>
             {%- when '2' -%}
                 <div id="home-product-slide-{{section.id}}">
@@ -82,59 +83,6 @@
         </script>
     </div>
 </div>
-<button id="myBtn">Open Modal</button>
-<div class="modal" id="myModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-    </div>
-</div>
-<script type="application/javascript">
-    async function myForm(id) {
-        this.classList.add('pending');
-        const item = await addItem(id,1);
-        const cart= await getCart();
-        this.classList.remove('pending');
-        Shopify.item_count = cart.item_count;
-        showItemCart();
-    }
-    var modal = document.getElementById("myModal");
-    var btn = document.getElementById("myBtn");
-    var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-        }
-    async function addItem(variantId, quantity) {
-        const result = await fetch("/cart/add.js", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                id: variantId,
-                quantity: quantity
-            })
-        })
-    }
-    async function getCart() {
-        const result = await fetch("/cart.js");
-
-        if (result.status === 200) {
-            return result.json();
-        }
-
-        throw new Error(`Failed to get request, Shopify returned ${result.status} ${result.statusText}`);
-    }
-</script>
 {% schema %}
 {
     "name": "Home Product Slide",

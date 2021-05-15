@@ -4,6 +4,7 @@
   assign compare_at_price = current_variant.compare_at_price
   assign price = current_variant.price
   assign my_description =  product.description | split: '---'
+  assign variant_change = product.selected_variant
 -%}
 <div class="product-container" id="ProductSection-{{ section.id }}"
   data-section-id="{{ section.id }}"
@@ -56,36 +57,117 @@
       <div class="product-infomation-description">{{ my_description[0] }}</div>
       {%- if product.compare_at_price > product.price -%}
         <div class="product-infomation-price">
-          <span class="product-infomation-price-sale">{{product.price | money}}</span>
+          <span class="product-infomation-price-sale" id="variant-price-sale">{{product.price | money}}</span>
           <span class="product-infomation-price-original-sale">{{product.compare_at_price | money}}</span>
-          <span class="product-infomation-price-save">| You save </span>
-          <span class="product-infomation-price-minus">{{product.compare_at_price | minus: product.price | money}} ({{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%)</span>
+          <span style="color: #BABCBF;">|</span>
+          <span class="product-infomation-price-save">You save </span>
+          <span class="product-infomation-price-minus" id="variant-price-minus">{{product.compare_at_price | minus: product.price | money}} ({{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%)</span>
         </div>
       {%- else -%}
         <div>
           <p class="product-infomation-price-original">{{product.compare_at_price | money}}</p>
         </div>
       {%- endif -%}
-      <form action="/cart/add" data-productid="{{product.id}}" method="post" class="product-quantity">
-          {% if product.variants.size > 1 %}
-          <div class="product-options">
-            <select name="id" data-productid="{{product.id}}" id="product-select" class="product-select">
-              {% for variant in product.variants %}
-                <option {% if variant == selectedVariant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
-              {% endfor %}
-            </select>
+
+      {% if product.variants.size > 1 %}
+        {%- liquid
+          assign first_variant = product.variants | first
+          assign selected_variant = product.selected_or_first_available_variant | default: first_variant
+        -%}
+        <form id="js-swatch-form" name="formVariant">
+          <div class="swatch-list">
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                <label for="ProductSelect-option-{{ forloop.index0 }}" class="product-options-label">
+                  {{ option.name | escape }}
+                </label>
+                <div class="product-select">
+                  <select id="ProductSelect-{{ forloop.index0 }}" data-index="option{{ forloop.index }}" class="product-options-select" name="option{{ forloop.index }}">
+                    {%- for value in option.values -%}
+                      <option class="js-option-item" value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %} >
+                        {{ value | escape }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endfor -%}
+            {%- endunless -%}
           </div>
-          {% else %}
-            <input type="hidden" name="id" data-productid="{{product.id}}" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
-          {% endif %}
-          <div class="product-quantity-control" 
-          {%- if product.available -%} style="display:content"
-          {%- else -%}
-            style="display:none"
-          {%- endif -%}>
-            <span id="down-{{item.id}}">-</span>
-            <input type="number" value="1" min="1" id="quantity" name="quantity" data-quantity-item="{{forloop.index}}">
-            <span id="up-{{item.id}}">+</span>
+        </form>
+        {% else %}
+          <input type="hidden" name="id" data-productid="{{product.id}}" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+      {% endif %}
+
+        <script type="text/javascript">
+        </script>
+        <style>
+          .swatch-list{
+            width: 100%;
+            display: flex;
+          }
+          .product-options-label{
+            font-style: normal;
+              font-weight: normal;
+              font-size: 14px;
+              line-height: 17px;
+            align-items: center;
+            color: #272E35;
+            padding-right: 20px;
+            align-self: center;
+          }
+          .product-options-select{
+            inline-size: auto;
+            outline: none;
+            background: transparent;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+            display: block;
+            padding-left: 15px;
+            font-size: 14px;
+            color:  #272E35;
+            margin-right: 20px;
+            border-radius: 2px;
+            border: 1px solid #F6F6F6;
+          }
+          .product-select{
+            position: relative;
+            display: flex;
+            width: 20em;
+            height: 3em;
+            line-height: 3;
+            overflow: hidden;
+            border-radius: .25em;
+          }
+          .product-select::after{
+            content: "\25BC";
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 2em;
+            cursor: pointer;
+            pointer-events: none;
+            -webkit-transition: .25s all ease;
+            -o-transition: .25s all ease;
+            transition: .25s all ease;
+          }
+          select {
+            flex: 1;
+            padding: 0 .5em;
+            color: #fff;
+            cursor: pointer;
+          }
+        </style>
+      <form action="/cart/add" data-productid="{{product.id}}" method="post" class="product-quantity">
+          <div class="product-quantity-control"
+            {%- if product.available -%} style="display:content"
+            {%- else -%}
+              style="display:none"
+            {%- endif -%}>
+            <span id="down-{{item.id}}" style="width: 100%; line-height: 50px; outline: none;border: none;user-select: none;">-</span>
+            <input type="number" value="1" min="1" id="quantity" name="quantity" data-quantity-item="{{forloop.index}}" style="outline: none;width: 100%; line-height: 50px;border: none;">
+            <span id="up-{{item.id}}" style="width: 100%; line-height: 50px; outline: none;border: none;user-select: none;">+</span>
             <script>
               document.getElementById('down-{{item.id}}').addEventListener('click',function(){
                   let input = this.nextElementSibling;
@@ -474,6 +556,11 @@
   </script>
 {% endunless %} {% endcomment %}
 
+
+<script>
+  var product = {{product | json}};
+  Shopify.product_variant = product.variants;
+</script>
 {% schema %}
 {
   "name": {
