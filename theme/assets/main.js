@@ -118,3 +118,12 @@ function showModal(dataItem, dataCart) {
   imageElement.innerHTML = "<img src=" + dataItem.image + ">";
   document.body.addClass("overflow-hidden");
 }
+
+//form submit sản phẩm lên giỏ hàng
+async function productForm(quantity) {
+  const item = await addItem(Shopify.id_product, quantity);
+  const cart = await getCart();
+  Shopify.item_count = cart.item_count;
+  showItemCart();
+  showModal(item, cart);
+}

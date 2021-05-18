@@ -1,12 +1,13 @@
 {%- liquid 
   assign variant_first_available = product.first_available_variant
   assign available = product.available   
+  assign current_variant = product.selected_or_first_available_variant
 -%}
 <div class="home-product-slide-content">
     <div class="home-product-slide-content-promotion-like">
-        {%- if product.compare_at_price > product.price -%}
+        {%- if current_variant.compare_at_price > current_variant.price -%}
             <div class="home-product-slide-content-promotion">
-                <p>-{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</p>
+                <p>-{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%</p>
             </div>
         {%- endif -%}
         <div class="home-product-slide-content-like">
@@ -36,23 +37,23 @@
     </div>
     <div class="home-product-slide-content-price-button">
         <div class="home-product-slide-content-price">
-            {%- if product.compare_at_price > product.price -%}
+            {%- if current_variant.compare_at_price > current_variant.price -%}
                 <div class="home-product-slide-content-price-sale">
-                    {{product.price | money}}
+                    {{current_variant.price | money}}
                 </div>
                 <div class="home-product-slide-content-price-sale-original">
-                    {{product.compare_at_price | money}}
+                    {{current_variant.compare_at_price | money}}
                 </div>
             {%- else -%}
                 <div class="home-product-slide-content-price-original">
-                    {{product.compare_at_price | money}}
+                    {{current_variant.compare_at_price | money}}
                 </div>
             {%- endif -%}
 
         </div>
         <div class="home-product-slide-content-button">
             {%- if available -%}
-                <form action="/cart/add" onsubmit="myForm.call(this,{{variant_first_available.id}}); return false">
+                <form class="form-product-list" action="/cart/add" onsubmit="myForm.call(this,{{variant_first_available.id}}); return false">
                     <input type="hidden" name="id" value="{{variant_first_available.id}}">
                     <button type="submit" class="icon-cart">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

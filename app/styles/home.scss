@@ -1067,7 +1067,7 @@ body{
                     color: #D31E1E;
                     padding-right: 8px;
                     width: 50%;
-                    overflow: hidden;
+                    padding-right: 20px;
                     text-overflow: ellipsis;
                 }
 
@@ -1161,24 +1161,6 @@ body{
                         transform: rotate(360deg);
                     }
                 }
-    
-                form[action="/cart/add"]{
-                    .icon-cart{
-                        .loader{
-                            display: none;
-                        }
-                    }
-                    &.pending{
-                        .icon-cart{
-                            .loader{
-                                display: block;
-                            }
-                            svg{
-                                display: none;
-                            }
-                        }
-                    }
-                }
             }
         }
     }
@@ -1216,6 +1198,23 @@ body{
         }
     }
     
+}
+.form-product-list{
+    .icon-cart{
+        .loader{
+            display: none;
+        }
+    }
+    &.pending{
+        .icon-cart{
+            .loader{    
+                display: block;
+            }
+            svg{
+                display: none;
+            }
+        }
+    }
 }
 .footer-container{
     width: auto;
@@ -1791,7 +1790,7 @@ body{
                             display: block;
                             width: 325px;
                             word-break: break-word;                            ;
-                            padding-bottom: 8px;
+                            padding-bottom: 6px;
                             text-decoration: none;
                             font-style: normal;
                             font-weight: normal;
@@ -2325,6 +2324,11 @@ body{
             }
             .product-payment{
                 padding-top: 23px;
+                max-width: 100%;
+
+                svg{
+                    max-width: 100%;
+                }
             }
         }
     }
@@ -2394,6 +2398,13 @@ body{
             }
         }
     }
+}
+strong{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #343F49;
 }
 .collection-list-container{
     max-width: 1440px;

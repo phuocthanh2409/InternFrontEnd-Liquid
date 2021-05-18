@@ -28,7 +28,14 @@
                   <a class="card-product-title" href="{{ item.url }}" data-cart-item-title data-role="product-title">
                     {{ item.product.title }}
                   </a>
-                  <a class="card-product-vendor" href='{{ "Original Equipment" | url_for_vendor}}'>{{item.product.vendor}}
+                  {% unless item.product.has_only_default_variant %}
+                    <ul>
+                      {% for option in item.options_with_values %}
+                        <li style="padding-bottom: 5px; font-size: 13px; color: #7C7C7C">{{ option.name }}: {{ option.value }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endunless %}
+                  <a class="card-product-vendor" href='{{ "Original Equipment" | url_for_vendor}}'>{{item.product.variant}}
                   </a>
                 </div>
               </div>
